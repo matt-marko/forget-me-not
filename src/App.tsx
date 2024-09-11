@@ -1,24 +1,11 @@
 import { useState } from 'react';
-import { AppBar, List, ListItem, TextField, Button, Container, Checkbox, ListItemButton, ListItemText } from '@mui/material';
+import { AppBar, List, ListItem, TextField, Button, Container, Checkbox, ListItemText } from '@mui/material';
 import './App.css';
 import { TodoItem } from './todo-item';
 
-const exampleItems: TodoItem[] = [
-  {
-    id: 1,
-    task: 'stuff',
-    completed: false,
-  },
-  {
-    id: 2,
-    task: 'things',
-    completed: false,
-  }
-]
-
 function App() {
   const [todoInput, setTodoInput] = useState('');
-  const [todoItems, setTodoItems] = useState(exampleItems);
+  const [todoItems, setTodoItems] = useState(JSON.parse(localStorage.getItem('todoItems')?? '[]'));
 
   const handleTodoInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTodoInput(event.target.value);
@@ -37,12 +24,12 @@ function App() {
 
     const newTodoItems: TodoItem[] = [...todoItems, newTodoItem];
 
-    setTodoItems(newTodoItems);
+    updateTodoItems(newTodoItems);
     setTodoInput('');
   };
 
   const completeTask = (id: number) => {
-    const completedItem: TodoItem | undefined = todoItems.find((item) => item.id === id);
+    const completedItem: TodoItem | undefined = todoItems.find((item: TodoItem) => item.id === id);
 
     if (completedItem) {
       if (completedItem.completed) {
@@ -53,15 +40,20 @@ function App() {
 
       const newTodoItems: TodoItem[] = [...todoItems];
   
-      setTodoItems(newTodoItems);
+      updateTodoItems(newTodoItems);
     }
   };
 
   const deleteTask = (id: number) => {
-    const remainingItems: TodoItem[] = todoItems.filter((item) => item.id !== id);
+    const remainingItems: TodoItem[] = todoItems.filter((item: TodoItem) => item.id !== id);
 
-    setTodoItems(remainingItems);
+    updateTodoItems(remainingItems);
   };
+
+  const updateTodoItems = (newTodoItems: TodoItem[]) => {
+    localStorage.setItem('todoItems', JSON.stringify(newTodoItems));
+    setTodoItems(newTodoItems);
+  }
 
   return (
     <>
@@ -78,7 +70,7 @@ function App() {
         </Button>
       </Container>
       <List className="TodoItemsList">
-        {todoItems.map(todoItem => {
+        {todoItems.map((todoItem: TodoItem) => {
           return (
             <ListItem key={todoItem.id} className="todoItem" divider={true}>
               <Checkbox 
