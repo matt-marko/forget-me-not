@@ -57,7 +57,7 @@ function App() {
 
   return (
     <>
-      <AppBar style={{ height: '40px', fontSize: '26px'}}>Archana</AppBar>
+      <AppBar style={{ height: '40px', fontSize: '26px'}}>Forget Me Not</AppBar>
       <Container>
         <TextField value={todoInput} onChange={handleTodoInputChange} label="Task" variant="outlined"/>
         <Button 
