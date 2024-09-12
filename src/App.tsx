@@ -1,31 +1,46 @@
 import { useState } from 'react';
-import { AppBar, List, ListItem, TextField, Button, Container, Checkbox, ListItemText } from '@mui/material';
+import { AppBar, List, ListItem, Button, Checkbox, ListItemText } from '@mui/material';
 import './App.css';
 import { TodoItem } from './todo-item';
+import TaskInput from './components/TaskInput';
 
 function App() {
-  const [todoInput, setTodoInput] = useState('');
   const [todoItems, setTodoItems] = useState(JSON.parse(localStorage.getItem('todoItems')?? '[]'));
 
-  const handleTodoInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTodoInput(event.target.value);
-  };
+  const generateId = (): number => {
+    let existDuplicate = false;
 
-  const addTodoItem = () => {
-    if (!todoInput) {
+    for (let i = 0; i < todoItems.length; i++) {
+      for (let j = 0; j < todoItems.length; j++) {
+        if (todoItems[j].id === i) {
+          existDuplicate = true;
+        }
+      }
+
+      if (!existDuplicate) {
+        return i;
+      } 
+
+      existDuplicate = false;
+    }
+
+    return todoItems.length;
+  }
+
+  const addTodoItem = (taskName: string) => {
+    if (!taskName) {
       return;
     }
 
     const newTodoItem: TodoItem = {
-      id: todoItems.length + 1,
-      task: todoInput,
+      id: generateId(),
+      task: taskName,
       completed: false,
     };
 
     const newTodoItems: TodoItem[] = [...todoItems, newTodoItem];
 
     updateTodoItems(newTodoItems);
-    setTodoInput('');
   };
 
   const completeTask = (id: number) => {
@@ -51,6 +66,7 @@ function App() {
   };
 
   const updateTodoItems = (newTodoItems: TodoItem[]) => {
+    console.log(newTodoItems);
     localStorage.setItem('todoItems', JSON.stringify(newTodoItems));
     setTodoItems(newTodoItems);
   }
@@ -58,17 +74,7 @@ function App() {
   return (
     <>
       <AppBar style={{ height: '40px', fontSize: '26px'}}>Forget Me Not</AppBar>
-      <Container>
-        <TextField value={todoInput} onChange={handleTodoInputChange} label="Task" variant="outlined"/>
-        <Button 
-          style={{ height: '55px', fontSize: '30px' }}
-          className="addTodoButton" 
-          onClick={addTodoItem}
-          variant="contained"
-        >
-          +
-        </Button>
-      </Container>
+      <TaskInput addTodoItem={addTodoItem} />
       <List className="TodoItemsList">
         {todoItems.map((todoItem: TodoItem) => {
           return (
@@ -95,4 +101,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
