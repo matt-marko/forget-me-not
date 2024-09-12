@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { AppBar, List, ListItem, Button, Checkbox, ListItemText } from '@mui/material';
+import { AppBar, List } from '@mui/material';
 import './App.css';
-import { TodoItem } from './todo-item';
-import TaskInput from './components/TaskInput';
+import { Task } from '../task';
+import TaskInput from './TaskInput';
+import TaskItem from './TaskItem';
 
 function App() {
   const [todoItems, setTodoItems] = useState(JSON.parse(localStorage.getItem('todoItems')?? '[]'));
@@ -32,19 +33,19 @@ function App() {
       return;
     }
 
-    const newTodoItem: TodoItem = {
+    const newTodoItem: Task = {
       id: generateId(),
       task: taskName,
       completed: false,
     };
 
-    const newTodoItems: TodoItem[] = [...todoItems, newTodoItem];
+    const newTodoItems: Task[] = [...todoItems, newTodoItem];
 
     updateTodoItems(newTodoItems);
   };
 
   const completeTask = (id: number) => {
-    const completedItem: TodoItem | undefined = todoItems.find((item: TodoItem) => item.id === id);
+    const completedItem: Task | undefined = todoItems.find((item: Task) => item.id === id);
 
     if (completedItem) {
       if (completedItem.completed) {
@@ -53,20 +54,18 @@ function App() {
         completedItem.completed = true;
       }
 
-      const newTodoItems: TodoItem[] = [...todoItems];
+      const newTodoItems: Task[] = [...todoItems];
   
       updateTodoItems(newTodoItems);
     }
   };
 
   const deleteTask = (id: number) => {
-    const remainingItems: TodoItem[] = todoItems.filter((item: TodoItem) => item.id !== id);
-
+    const remainingItems: Task[] = todoItems.filter((item: Task) => item.id !== id);
     updateTodoItems(remainingItems);
   };
 
-  const updateTodoItems = (newTodoItems: TodoItem[]) => {
-    console.log(newTodoItems);
+  const updateTodoItems = (newTodoItems: Task[]) => {
     localStorage.setItem('todoItems', JSON.stringify(newTodoItems));
     setTodoItems(newTodoItems);
   }
@@ -76,25 +75,8 @@ function App() {
       <AppBar style={{ height: '40px', fontSize: '26px'}}>Forget Me Not</AppBar>
       <TaskInput addTodoItem={addTodoItem} />
       <List className="TodoItemsList">
-        {todoItems.map((todoItem: TodoItem) => {
-          return (
-            <ListItem key={todoItem.id} className="todoItem" divider={true}>
-              <Checkbox 
-                checked={todoItem.completed}
-                onChange={() => completeTask(todoItem.id)}
-              >
-              </Checkbox>
-              <ListItemText>{todoItem.task}</ListItemText>
-              <Button 
-                className="deleteTaskButton"
-                variant="contained" 
-                style={{backgroundColor: 'red', fontSize: '30px', height: '40px'}}
-                onClick={() => deleteTask(todoItem.id)}
-              >
-                -
-              </Button>
-            </ListItem>
-          )
+        {todoItems.map((task: Task) => {
+          return <TaskItem key={task.id} task={task} completeTask={completeTask} deleteTask={deleteTask}/>
         })}
       </List>
     </>

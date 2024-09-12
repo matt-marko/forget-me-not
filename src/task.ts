@@ -1,4 +1,4 @@
-export interface TodoItem {
+export interface Task {
     id: number;
     task: String;
     completed: boolean;
