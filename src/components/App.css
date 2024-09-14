@@ -1,7 +1,5 @@
-#root {
-  max-width: 1280px;
+.mainContent {
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
@@ -9,4 +7,13 @@
   background-color: lightblue;
   border-radius: 10px;
   margin: 2px 0 2px 0;
+}
+
+.todoItemsList {
+  display: inline-flex;
+  flex-direction: column;
+  background-color: lightcyan;
+  border-radius: 10px;
+  max-height: 70vh;
+  overflow: auto;
 }

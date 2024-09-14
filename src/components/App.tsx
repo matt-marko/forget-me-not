@@ -4,6 +4,7 @@ import './App.css';
 import { Task } from '../task';
 import TaskInput from './TaskInput';
 import TaskItem from './TaskItem';
+import Footer from './Footer';
 
 function App() {
   const [todoItems, setTodoItems] = useState(JSON.parse(localStorage.getItem('todoItems')?? '[]'));
@@ -71,15 +72,18 @@ function App() {
   }
 
   return (
-    <>
-      <AppBar style={{ height: '40px', fontSize: '26px'}}>Forget Me Not</AppBar>
-      <TaskInput addTodoItem={addTodoItem} />
-      <List className="TodoItemsList">
-        {todoItems.map((task: Task) => {
-          return <TaskItem key={task.id} task={task} completeTask={completeTask} deleteTask={deleteTask}/>
-        })}
-      </List>
-    </>
+    <div>
+      <AppBar style={{ fontSize: '26px', textAlign: 'center'}}>Forget Me Not</AppBar>
+      <div className="mainContent">
+        <TaskInput addTodoItem={addTodoItem} />
+        <List className="todoItemsList" style={todoItems.length ? { paddingLeft: '20px', paddingRight: '20px'} : {}}>
+          {todoItems.map((task: Task) => {
+            return <TaskItem key={task.id} task={task} completeTask={completeTask} deleteTask={deleteTask}/>
+          })}
+        </List>
+      </div>
+      <Footer />
+    </div>
   );
 }
 
