@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { AppBar, List } from '@mui/material';
+import { DndContext } from '@dnd-kit/core';
 import './App.css';
 import { Task } from '../task';
 import TaskInput from './TaskInput';
@@ -76,11 +77,13 @@ function App() {
       <AppBar style={{ fontSize: '26px', textAlign: 'center'}}>Forget Me Not</AppBar>
       <div className="mainContent">
         <TaskInput addTodoItem={addTodoItem} />
-        <List className="todoItemsList" style={todoItems.length ? { paddingLeft: '20px', paddingRight: '20px'} : {}}>
-          {todoItems.map((task: Task) => {
-            return <TaskItem key={task.id} task={task} completeTask={completeTask} deleteTask={deleteTask}/>
-          })}
-        </List>
+        <DndContext>
+          <List className="todoItemsList" style={todoItems.length ? { paddingLeft: '20px', paddingRight: '20px'} : {}}>
+            {todoItems.map((task: Task) => {
+              return <TaskItem key={task.id} id={task.id} task={task} completeTask={completeTask} deleteTask={deleteTask}/>
+            })}
+          </List>
+        </DndContext>
       </div>
       <Footer />
     </div>
