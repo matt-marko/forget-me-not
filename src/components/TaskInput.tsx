@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { TextField, Button, Container } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
 function TaskInput(props: any) {
   const [taskInput, setTaskInput] = useState('');
@@ -21,7 +22,7 @@ function TaskInput(props: any) {
           }}
           variant="contained"
         >
-          +
+          <AddIcon></AddIcon>
         </Button>
       </Container>
     </>
