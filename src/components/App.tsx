@@ -8,6 +8,7 @@ import Footer from './Footer';
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import Header from './Header';
+import TaskEditor from './TaskEditor';
 
 const mainContentStyle: React.CSSProperties = {
   margin: '0 auto',
@@ -16,6 +17,8 @@ const mainContentStyle: React.CSSProperties = {
 
 function App() {
   const [tasks, setTasks] = useState(JSON.parse(localStorage.getItem('tasks') ?? '[]'));
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedTaskId, setEditedTaskId] = useState(0);
 
   const generateId = (): number => {
     let existDuplicate = false;
@@ -92,9 +95,22 @@ function App() {
     updateTasks(remainingItems);
   };
 
-  // TODO: implement?
-  const editTask = (id: number): void => {
+  const editTask = (id: number) => {
+    setEditedTaskId(id);
+    setIsEditing(true);
+  };
 
+  const confirmEdit = (id: number, newText: string): void => {
+    const taskToEdit: Task | undefined = tasks.find((item: Task) => item.id === id);
+
+    if (taskToEdit) {
+      taskToEdit.text = newText;
+
+      const newTasks: Task[] = [...tasks];
+      updateTasks(newTasks);
+    }
+
+    setIsEditing(false);
   }
 
   const updateTasks = (newTasks: Task[]): void => {
@@ -117,16 +133,32 @@ function App() {
     <div>
       <Header />
       <div style={mainContentStyle}>
-        <TaskInput addTask={addTask} />
-        <List style={getTaskListStyle()}>
-          <DndContext onDragEnd={handleDragEnd} modifiers={[restrictToVerticalAxis, restrictToParentElement]}>
-            <SortableContext items={tasks}>
-              {tasks.map((task: Task) => {
-                return <TaskItem key={task.id} id={task.id} task={task} completeTask={completeTask} deleteTask={deleteTask}/>
-              })}
-            </SortableContext>
-          </DndContext>
-        </List>
+        {
+          isEditing 
+            ? 
+              <TaskEditor task={tasks.find((task: Task) => task.id === editedTaskId)} confirmEdit={confirmEdit}/> 
+            : 
+              <div>        
+                <TaskInput addTask={addTask} />
+                <List style={getTaskListStyle()}>
+                  <DndContext onDragEnd={handleDragEnd} modifiers={[restrictToVerticalAxis, restrictToParentElement]}>
+                    <SortableContext items={tasks}>
+                      {tasks.map((task: Task) => {
+                        return (
+                          <TaskItem
+                            key={task.id}
+                            task={task}
+                            completeTask={completeTask}
+                            deleteTask={deleteTask}
+                            editTask={editTask}
+                          />
+                        );
+                      })}
+                    </SortableContext>
+                  </DndContext>
+                </List>
+              </div>
+        }
       </div>
       <Footer />
     </div>

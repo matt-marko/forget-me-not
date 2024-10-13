@@ -27,11 +27,24 @@ type RemoveButtonProps = {
   children: ReactNode
 }
 
-// TODO console log weird errors
 function TaskItemButton(props: RemoveButtonProps) {
+  let colour = '';
+
+  switch(props.colour) {
+    case 'red':
+      colour = 'linear-gradient(145deg, #ff5747, #e6321a)';
+      break;
+    case 'blue':
+      colour = 'linear-gradient(145deg, #3845f5, #5660e8)';
+      break;
+    default:
+      colour = 'linear-gradient(145deg, #ff5747, #e6321a)';
+  }
+
   const calculatedStyle: React.CSSProperties = {
     ...buttonStyle,
     visibility: props.display ? 'visible' : 'hidden',
+    backgroundImage: colour,
   }
 
   return(

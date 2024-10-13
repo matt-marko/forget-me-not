@@ -20,13 +20,13 @@ type TaskInputProps = {
 function TaskInput(props: TaskInputProps) {
   const [taskInput, setTaskInput] = useState('');
 
-  const handleTodoInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTaskInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setTaskInput(event.target.value);
   };
 
   return(
     <Container style={containerStyle}>
-      <TextField value={taskInput} onChange={handleTodoInputChange} label="Task" variant="outlined"/>
+      <TextField value={taskInput} onChange={handleTaskInputChange} label="Task" variant="outlined"/>
       <Button 
         style={buttonStyle}
         variant="contained"

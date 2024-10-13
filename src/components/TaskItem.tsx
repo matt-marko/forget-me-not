@@ -15,7 +15,7 @@ const listItemTextStyle: React.CSSProperties = {
   minWidth: '150px'
 };
 
-const todoItemStyle: React.CSSProperties = {
+const taskItemStyle: React.CSSProperties = {
   backgroundColor: 'lightblue',
   borderRadius: '10px',
   margin: '2px 0 2px 0',
@@ -42,6 +42,7 @@ type TaskItemProps = {
   task: Task;
   completeTask: Function;
   deleteTask: Function;
+  editTask: Function;
 }
 
 function TaskItem(props: TaskItemProps) {
@@ -64,13 +65,18 @@ function TaskItem(props: TaskItemProps) {
 
   return(
     <div style={dragAndDropStyle} ref={setNodeRef} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
-      <ListItem style={todoItemStyle} divider={true}>
+      <ListItem style={taskItemStyle} divider={true}>
         <Checkbox 
           checked={props.task.completed}
           onChange={() => props.completeTask(props.task.id)}
         >
         </Checkbox>
-        <ListItemText style={listItemTextStyle}>{props.task.text}</ListItemText>
+        <ListItemText 
+          spellCheck={false}
+          style={listItemTextStyle}
+        >
+          {props.task.text}
+        </ListItemText>
         <DragHandle {...attributes} {...listeners} style={dragHandleStyle}></DragHandle>
         <div style={removeButtonStyle}>
           <TaskItemButton 
@@ -79,17 +85,17 @@ function TaskItem(props: TaskItemProps) {
             display={isHovered}
             colour='red'
           >
-            <ClearIcon fontSize='6px'/>
+            <ClearIcon fontSize={'6px' as any}/>
           </TaskItemButton>
         </div>
         <div style={editButtonStyle}>
           <TaskItemButton
             task={props.task} 
-            clickHandler={() => props.deleteTask(props.task.id)} 
+            clickHandler={() => props.editTask(props.task.id)} 
             display={isHovered}
             colour='blue'
           >
-            <EditIcon fontSize='6px'/>
+            <EditIcon fontSize={'6px' as any}/>
           </TaskItemButton>
         </div>
       </ListItem>
