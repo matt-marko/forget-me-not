@@ -1,3 +1,4 @@
+import './TaskItemButton.css';
 import { ReactNode } from "react";
 import { Task } from "../task";
 
@@ -5,7 +6,6 @@ const buttonStyle: React.CSSProperties = {
   appearance: 'none',
   width: '20px',
   height: '20px',
-  backgroundImage: 'linear-gradient(145deg, #ff5747, #e6321a)',
   color: 'white',
   borderRadius: '50%',
   border: 'none',
@@ -28,27 +28,13 @@ type RemoveButtonProps = {
 }
 
 function TaskItemButton(props: RemoveButtonProps) {
-  let colour = '';
-
-  switch(props.colour) {
-    case 'red':
-      colour = 'linear-gradient(145deg, #ff5747, #e6321a)';
-      break;
-    case 'blue':
-      colour = 'linear-gradient(145deg, #3845f5, #5660e8)';
-      break;
-    default:
-      colour = 'linear-gradient(145deg, #ff5747, #e6321a)';
-  }
-
   const calculatedStyle: React.CSSProperties = {
     ...buttonStyle,
     visibility: props.display ? 'visible' : 'hidden',
-    backgroundImage: colour,
   }
 
   return(
-    <button onClick={() => props.clickHandler(props.task.id)} style={calculatedStyle}>
+    <button onClick={() => props.clickHandler(props.task.id)} style={calculatedStyle} className={props.colour}>
       {props.children}
     </button>
   );

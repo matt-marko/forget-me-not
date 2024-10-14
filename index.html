@@ -17,7 +17,7 @@
         console.log('Before:', tasks);
 
         tasks.forEach(task => { 
-          task.task = task.text;
+          task.text = task.task;
           delete task.task;
         });
 

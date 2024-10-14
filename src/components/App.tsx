@@ -9,6 +9,7 @@ import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import Header from './Header';
 import TaskEditor from './TaskEditor';
+import React from 'react';
 
 const mainContentStyle: React.CSSProperties = {
   margin: '0 auto',
