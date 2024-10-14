@@ -1,31 +1,43 @@
-import { useState } from 'react';
-import { TextField, Button, Container } from '@mui/material';
+import React, { useState } from 'react';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Container from '@mui/material/Container';
 import AddIcon from '@mui/icons-material/Add';
 
-function TaskInput(props: any) {
+const containerStyle: React.CSSProperties = {
+  marginBottom: '5px',
+};
+
+const buttonStyle: React.CSSProperties = {
+  height: '55px',
+  fontSize: '30px',
+}
+
+type TaskInputProps = {
+  addTask: Function;
+}
+
+function TaskInput(props: TaskInputProps) {
   const [taskInput, setTaskInput] = useState('');
 
-  const handleTodoInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTaskInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setTaskInput(event.target.value);
   };
 
   return(
-    <>
-      <Container style={{ marginBottom: '5px' }}>
-        <TextField value={taskInput} onChange={handleTodoInputChange} label="Task" variant="outlined"/>
-        <Button 
-          style={{ height: '55px', fontSize: '30px' }}
-          className="addTodoButton" 
-          onClick={() => {
-              props.addTodoItem(taskInput);
-              setTaskInput('');
-          }}
-          variant="contained"
-        >
-          <AddIcon></AddIcon>
-        </Button>
-      </Container>
-    </>
+    <Container style={containerStyle}>
+      <TextField value={taskInput} onChange={handleTaskInputChange} label="Task" variant="outlined"/>
+      <Button 
+        style={buttonStyle}
+        variant="contained"
+        onClick={() => {
+            props.addTask(taskInput);
+            setTaskInput('');
+        }}
+      >
+        <AddIcon></AddIcon>
+      </Button>
+    </Container>
   );
 }
 

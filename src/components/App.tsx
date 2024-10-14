@@ -1,23 +1,32 @@
 import { useState } from 'react';
-import { AppBar, List } from '@mui/material';
+import List from '@mui/material/List';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
-import './App.css';
 import { Task } from '../task';
 import TaskInput from './TaskInput';
 import TaskItem from './TaskItem';
 import Footer from './Footer';
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import Header from './Header';
+import TaskEditor from './TaskEditor';
+import React from 'react';
+
+const mainContentStyle: React.CSSProperties = {
+  margin: '0 auto',
+  textAlign: 'center',
+};
 
 function App() {
-  const [todoItems, setTodoItems] = useState(JSON.parse(localStorage.getItem('todoItems')?? '[]'));
+  const [tasks, setTasks] = useState(JSON.parse(localStorage.getItem('tasks') ?? '[]'));
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedTaskId, setEditedTaskId] = useState(0);
 
   const generateId = (): number => {
     let existDuplicate = false;
 
-    for (let i = 1; i < todoItems.length + 1; i++) {
-      for (let j = 0; j < todoItems.length; j++) {
-        if (todoItems[j].id === i) {
+    for (let i = 1; i < tasks.length + 1; i++) {
+      for (let j = 0; j < tasks.length; j++) {
+        if (tasks[j].id === i) {
           existDuplicate = true;
         }
       }
@@ -29,27 +38,45 @@ function App() {
       existDuplicate = false;
     }
 
-    return todoItems.length + 1;
+    return tasks.length + 1;
   }
 
-  const addTodoItem = (taskName: string) => {
+  const getTaskListStyle = (): React.CSSProperties => {
+    const style: React.CSSProperties = {
+      display: 'inline-flex',
+      flexDirection: 'column',
+      backgroundColor: 'lightcyan',
+      borderRadius: '10px',
+      maxHeight: '70vh',
+      overflow: 'auto',
+    };
+
+    if (tasks.length) {
+      style.paddingLeft = '20px';
+      style.paddingRight = '20px';
+    }
+
+    return style;
+  };
+
+  const addTask = (taskName: string): void => {
     if (!taskName) {
       return;
     }
 
-    const newTodoItem: Task = {
+    const newTask: Task = {
       id: generateId(),
-      task: taskName,
+      text: taskName,
       completed: false,
     };
 
-    const newTodoItems: Task[] = [...todoItems, newTodoItem];
+    const newTasks: Task[] = [...tasks, newTask];
 
-    updateTodoItems(newTodoItems);
+    updateTasks(newTasks);
   };
 
-  const completeTask = (id: number) => {
-    const completedItem: Task | undefined = todoItems.find((item: Task) => item.id === id);
+  const completeTask = (id: number): void => {
+    const completedItem: Task | undefined = tasks.find((item: Task) => item.id === id);
 
     if (completedItem) {
       if (completedItem.completed) {
@@ -58,47 +85,81 @@ function App() {
         completedItem.completed = true;
       }
 
-      const newTodoItems: Task[] = [...todoItems];
+      const newTasks: Task[] = [...tasks];
   
-      updateTodoItems(newTodoItems);
+      updateTasks(newTasks);
     }
   };
 
-  const deleteTask = (id: number) => {
-    const remainingItems: Task[] = todoItems.filter((item: Task) => item.id !== id);
-    updateTodoItems(remainingItems);
+  const deleteTask = (id: number): void => {
+    const remainingItems: Task[] = tasks.filter((item: Task) => item.id !== id);
+    updateTasks(remainingItems);
   };
 
-  const updateTodoItems = (newTodoItems: Task[]) => {
-    localStorage.setItem('todoItems', JSON.stringify(newTodoItems));
-    setTodoItems(newTodoItems);
+  const editTask = (id: number) => {
+    setEditedTaskId(id);
+    setIsEditing(true);
+  };
+
+  const confirmEdit = (id: number, newText: string): void => {
+    const taskToEdit: Task | undefined = tasks.find((item: Task) => item.id === id);
+
+    if (taskToEdit) {
+      taskToEdit.text = newText;
+
+      const newTasks: Task[] = [...tasks];
+      updateTasks(newTasks);
+    }
+
+    setIsEditing(false);
   }
 
-  const handleDragEnd = (event: DragEndEvent) => {
+  const updateTasks = (newTasks: Task[]): void => {
+    localStorage.setItem('tasks', JSON.stringify(newTasks));
+    setTasks(newTasks);
+  }
+
+  const handleDragEnd = (event: DragEndEvent): void => {
     const { active, over } = event; 
 
-    const oldIndex = todoItems.findIndex((item: Task) => item.id === active.id);
-    const newIndex = todoItems.findIndex((item: Task) => item.id === over?.id);
+    const oldIndex = tasks.findIndex((item: Task) => item.id === active.id);
+    const newIndex = tasks.findIndex((item: Task) => item.id === over?.id);
 
-    const newTodoItems: Task[] = arrayMove(todoItems, oldIndex, newIndex);
+    const newTasks: Task[] = arrayMove(tasks, oldIndex, newIndex);
 
-    updateTodoItems(newTodoItems);
+    updateTasks(newTasks);
   };
 
   return (
     <div>
-      <AppBar style={{ fontSize: '26px', textAlign: 'center'}}>Forget Me Not</AppBar>
-      <div className="mainContent">
-        <TaskInput addTodoItem={addTodoItem} />
-        <List className="todoItemsList" style={todoItems.length ? { paddingLeft: '20px', paddingRight: '20px'} : {}}>
-          <DndContext onDragEnd={handleDragEnd} modifiers={[restrictToVerticalAxis, restrictToParentElement]}>
-            <SortableContext items={todoItems}>
-              {todoItems.map((task: Task) => {
-                return <TaskItem key={task.id} id={task.id} task={task} completeTask={completeTask} deleteTask={deleteTask}/>
-              })}
-            </SortableContext>
-          </DndContext>
-        </List>
+      <Header />
+      <div style={mainContentStyle}>
+        {
+          isEditing 
+            ? 
+              <TaskEditor task={tasks.find((task: Task) => task.id === editedTaskId)} confirmEdit={confirmEdit}/> 
+            : 
+              <div>        
+                <TaskInput addTask={addTask} />
+                <List style={getTaskListStyle()}>
+                  <DndContext onDragEnd={handleDragEnd} modifiers={[restrictToVerticalAxis, restrictToParentElement]}>
+                    <SortableContext items={tasks}>
+                      {tasks.map((task: Task) => {
+                        return (
+                          <TaskItem
+                            key={task.id}
+                            task={task}
+                            completeTask={completeTask}
+                            deleteTask={deleteTask}
+                            editTask={editTask}
+                          />
+                        );
+                      })}
+                    </SortableContext>
+                  </DndContext>
+                </List>
+              </div>
+        }
       </div>
       <Footer />
     </div>
