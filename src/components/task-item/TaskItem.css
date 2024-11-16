@@ -1,0 +1,27 @@
+.listItemText {
+  padding: 0 15px 0 0;
+  min-width: 150px;
+}
+
+.taskItem {
+  background-color: lightblue;
+  border-radius: 10px;
+  margin: 2px 0 2px 0;
+}
+
+.editButton {
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+}
+
+.removeButton {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
+
+.dragHandle {
+  margin-right: 20px;
+  cursor: ns-resize;
+}

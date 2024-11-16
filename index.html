@@ -11,20 +11,21 @@
     <script type="module" src="/src/main.tsx"></script>
     
     <script>
-      let tasks = JSON.parse(localStorage.getItem('todoItems') ?? '[]');
+      let tasks = JSON.parse(localStorage.getItem('tasks') ?? '[]');
       
       if (tasks.length > 0) {
         console.log('Before:', tasks);
 
-        tasks.forEach(task => { 
-          task.text = task.task;
-          delete task.task;
-        });
+        const groups = [{
+          id: 1,
+          name: 'Default',
+          tasks,
+        }];
 
-        console.log('After:', tasks);
+        console.log('After:', groups);
 
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-        localStorage.removeItem('todoItems');
+        localStorage.setItem('groups', JSON.stringify(groups));
+        localStorage.removeItem('tasks');
       }
 
       console.log('No changes were necessary');

@@ -1,3 +1,4 @@
+import './TaskItem.css';
 import Checkbox from '@mui/material/Checkbox';
 import ListItem  from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -6,37 +7,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import DragHandle from '@mui/icons-material/DragHandle';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Task } from '../task';
-import TaskItemButton from './TaskItemButton';
+import { Task } from '../../interfaces/task';
+import TaskItemButton from '../item-button/ItemButton';
 import { useState } from 'react';
-
-const listItemTextStyle: React.CSSProperties = {
-  padding: '0 15px 0 0',
-  minWidth: '150px'
-};
-
-const taskItemStyle: React.CSSProperties = {
-  backgroundColor: 'lightblue',
-  borderRadius: '10px',
-  margin: '2px 0 2px 0',
-}
-
-const dragHandleStyle: React.CSSProperties = {
-  marginRight: '20px',
-  cursor: 'ns-resize',
-};
-
-const removeButtonStyle: React.CSSProperties = {
-  position: 'absolute',
-  right: '10px',
-  top: '5px',
-}
-
-const editButtonStyle: React.CSSProperties = {
-  position: 'absolute',
-  right: '10px',
-  bottom: '5px',
-}
 
 type TaskItemProps = {
   task: Task;
@@ -65,22 +38,21 @@ function TaskItem(props: TaskItemProps) {
 
   return(
     <div style={dragAndDropStyle} ref={setNodeRef} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
-      <ListItem style={taskItemStyle} divider={true}>
+      <ListItem className="taskItem" divider={true}>
         <Checkbox 
           checked={props.task.completed}
           onChange={() => props.completeTask(props.task.id)}
         >
         </Checkbox>
-        <ListItemText 
-          spellCheck={false}
-          style={listItemTextStyle}
-        >
-          {props.task.text}
+        <ListItemText>
+          <div className="listItemText" spellCheck={false}>
+            {props.task.text}
+          </div>
         </ListItemText>
-        <DragHandle {...attributes} {...listeners} style={dragHandleStyle}></DragHandle>
-        <div style={removeButtonStyle}>
+        <DragHandle {...attributes} {...listeners} className="dragHandle"></DragHandle>
+        <div className="removeButton">
           <TaskItemButton 
-            task={props.task} 
+            item={props.task} 
             clickHandler={() => props.deleteTask(props.task.id)} 
             display={isHovered}
             colour='red'
@@ -88,9 +60,9 @@ function TaskItem(props: TaskItemProps) {
             <ClearIcon fontSize={'6px' as any}/>
           </TaskItemButton>
         </div>
-        <div style={editButtonStyle}>
+        <div className='editButton'>
           <TaskItemButton
-            task={props.task} 
+            item={props.task} 
             clickHandler={() => props.editTask(props.task.id)} 
             display={isHovered}
             colour='blue'

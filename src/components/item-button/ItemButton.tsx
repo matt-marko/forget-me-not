@@ -1,6 +1,7 @@
-import './TaskItemButton.css';
+import './ItemButton.css';
 import { ReactNode } from "react";
-import { Task } from "../task";
+import { Task } from "../../interfaces/task";
+import { Group } from '../../interfaces/group';
 
 const buttonStyle: React.CSSProperties = {
   appearance: 'none',
@@ -19,23 +20,27 @@ const buttonStyle: React.CSSProperties = {
   userSelect: 'none',
 };
 
-type RemoveButtonProps = {
-  task: Task;
+type ItemButtonProps = {
+  item: Task | Group;
   clickHandler: Function;
   display: boolean,
   colour: string,
   children: ReactNode
 }
 
-function TaskItemButton(props: RemoveButtonProps) {
+function TaskItemButton(props: ItemButtonProps) {
   const calculatedStyle: React.CSSProperties = {
     ...buttonStyle,
     visibility: props.display ? 'visible' : 'hidden',
   }
 
   return(
-    <button onClick={() => props.clickHandler(props.task.id)} style={calculatedStyle} className={props.colour}>
-      {props.children}
+    <button onClick={(e) => {
+      e.stopPropagation();
+      props.clickHandler(props.item.id)
+    }} 
+    style={calculatedStyle} className={props.colour}>
+    {props.children}
     </button>
   );
 }
