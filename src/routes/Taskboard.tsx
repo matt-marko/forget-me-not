@@ -1,23 +1,33 @@
 import { useState } from 'react';
 import List from '@mui/material/List';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
-import { Task } from '../task';
-import TaskInput from './TaskInput';
-import TaskItem from './TaskItem';
-import Footer from './Footer';
+import { Task } from '../interfaces/task';
+import TaskInput from '../components/item-input/ItemInput';
+import TaskItem from '../components/task-item/TaskItem';
+import Footer from '../components/footer/Footer';
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
-import Header from './Header';
-import TaskEditor from './TaskEditor';
+import Header from '../components/header/Header';
 import React from 'react';
+import { useParams } from 'react-router';
+import { Group } from '../interfaces/group';
+import ItemEditor from '../components/item-editor/ItemEditor';
 
 const mainContentStyle: React.CSSProperties = {
   margin: '0 auto',
   textAlign: 'center',
-};
+}; 
 
 function App() {
-  const [tasks, setTasks] = useState(JSON.parse(localStorage.getItem('tasks') ?? '[]'));
+  const { groupId } = useParams();
+
+  const getCurrentGroup = (): Group => {
+    const groups: Group[] = JSON.parse(localStorage.getItem('groups') ?? '[]');
+    const currentGroup: Group | undefined = groups.find((group: Group) => group.id === parseInt(groupId!));
+    return currentGroup!;
+  }
+
+  const [tasks, setTasks] = useState(getCurrentGroup().tasks);
   const [isEditing, setIsEditing] = useState(false);
   const [editedTaskId, setEditedTaskId] = useState(0);
 
@@ -101,8 +111,8 @@ function App() {
     setIsEditing(true);
   };
 
-  const confirmEdit = (id: number, newText: string): void => {
-    const taskToEdit: Task | undefined = tasks.find((item: Task) => item.id === id);
+  const confirmEdit = (newText: string): void => {
+    const taskToEdit: Task | undefined = tasks.find((item: Task) => item.id === editedTaskId);
 
     if (taskToEdit) {
       taskToEdit.text = newText;
@@ -115,7 +125,10 @@ function App() {
   }
 
   const updateTasks = (newTasks: Task[]): void => {
-    localStorage.setItem('tasks', JSON.stringify(newTasks));
+    const groups = JSON.parse(localStorage.getItem('groups')!);
+    const currentGroup = groups.find((group: Group) => group.id === parseInt(groupId!));
+    currentGroup.tasks = newTasks;
+    localStorage.setItem('groups', JSON.stringify(groups));
     setTasks(newTasks);
   }
 
@@ -132,15 +145,19 @@ function App() {
 
   return (
     <div>
-      <Header />
+      <Header description={getCurrentGroup().name}></Header>
       <div style={mainContentStyle}>
         {
           isEditing 
             ? 
-              <TaskEditor task={tasks.find((task: Task) => task.id === editedTaskId)} confirmEdit={confirmEdit}/> 
+              <ItemEditor 
+                label="Add Task"
+                text={tasks.find((task: Task) => task.id === editedTaskId)!.text}
+                confirmEdit={confirmEdit}
+              /> 
             : 
               <div>        
-                <TaskInput addTask={addTask} />
+                <TaskInput addItem={addTask} label={'Add Task'} />
                 <List style={getTaskListStyle()}>
                   <DndContext onDragEnd={handleDragEnd} modifiers={[restrictToVerticalAxis, restrictToParentElement]}>
                     <SortableContext items={tasks}>
@@ -161,7 +178,7 @@ function App() {
               </div>
         }
       </div>
-      <Footer />
+      <Footer></ Footer>
     </div>
   );
 }
