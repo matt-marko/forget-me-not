@@ -60,6 +60,10 @@ function GroupItem(props: GroupItemProps) {
     transition,
   };
 
+  const getCompletedClass = (group: Group): string => {
+    return group.tasks.every(task => task.completed) ? 'completed-group-item' : ''
+  }
+
   return(
     <div 
       style={dragAndDropStyle}
@@ -73,7 +77,9 @@ function GroupItem(props: GroupItemProps) {
           spellCheck={false}
           style={listItemTextStyle}
         >
-          {props.group.name}
+          <div className={getCompletedClass(props.group)}>
+            {props.group.name}
+          </div>
         </ListItemText>
         <DragHandle {...attributes} {...listeners} style={dragHandleStyle}></DragHandle>
         <div style={removeButtonStyle}>

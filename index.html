@@ -9,26 +9,5 @@
   <body>
     <div id="root" style="width: 100vw"></div>
     <script type="module" src="/src/main.tsx"></script>
-    
-    <script>
-      let tasks = JSON.parse(localStorage.getItem('tasks') ?? '[]');
-      
-      if (tasks.length > 0) {
-        console.log('Before:', tasks);
-
-        const groups = [{
-          id: 1,
-          name: 'Default',
-          tasks,
-        }];
-
-        console.log('After:', groups);
-
-        localStorage.setItem('groups', JSON.stringify(groups));
-        localStorage.removeItem('tasks');
-      }
-
-      console.log('No changes were necessary');
-    </script>
   </body>
 </html>
