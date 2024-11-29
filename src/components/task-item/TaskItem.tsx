@@ -36,6 +36,10 @@ function TaskItem(props: TaskItemProps) {
     transition,
   };
 
+  const getCompletedClass = (completed: boolean): string => {
+    return completed ? 'completed-task-item' : ''
+  }
+
   return(
     <div style={dragAndDropStyle} ref={setNodeRef} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       <ListItem className="taskItem" divider={true}>
@@ -45,7 +49,7 @@ function TaskItem(props: TaskItemProps) {
         >
         </Checkbox>
         <ListItemText>
-          <div className="listItemText" spellCheck={false}>
+          <div className={`listItemText ${getCompletedClass(props.task.completed)}`} spellCheck={false}>
             {props.task.text}
           </div>
         </ListItemText>

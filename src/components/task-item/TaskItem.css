@@ -25,3 +25,9 @@
   margin-right: 20px;
   cursor: ns-resize;
 }
+
+.completed-task-item {
+  text-decoration: line-through;
+  text-decoration-color: rgba(95, 99, 104, 0.7);
+  color: #5F6368;
+}
