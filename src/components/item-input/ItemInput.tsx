@@ -19,13 +19,24 @@ function ItemInput(props: ItemInputProps) {
 
   return(
     <Container className='container'>
-      <TextField value={itemInput} onChange={handleItemInputChange} label={props.label} variant="outlined"/>
+      <TextField 
+        value={itemInput}
+        onChange={handleItemInputChange}
+        label={props.label}
+        variant="outlined"
+        onKeyDown={(event) => {
+          if(event.key === 'Enter') {
+            props.addItem(itemInput);
+            setItemInput('');
+          }
+        }}
+      />
       <Button 
         className='addButton'
         variant="contained"
         onClick={() => {
-            props.addItem(itemInput);
-            setItemInput('');
+          props.addItem(itemInput);
+          setItemInput('');
         }}
       >
         <AddIcon></AddIcon>
