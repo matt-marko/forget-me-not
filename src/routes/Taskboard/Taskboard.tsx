@@ -1,32 +1,30 @@
+import './Taskboard.css';
 import { useState } from 'react';
 import List from '@mui/material/List';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
-import { Task } from '../interfaces/task';
-import TaskInput from '../components/item-input/ItemInput';
-import TaskItem from '../components/task-item/TaskItem';
-import Footer from '../components/footer/Footer';
+import { Task } from '../../interfaces/task';
+import ItemInput from '../../components/item-input/ItemInput';
+import TaskItem from '../../components/task-item/TaskItem';
+import Footer from '../../components/footer/Footer';
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
-import Header from '../components/header/Header';
+import Header from '../../components/header/Header';
 import React from 'react';
-import { useParams } from 'react-router';
-import { Group } from '../interfaces/group';
-import ItemEditor from '../components/item-editor/ItemEditor';
+import { useNavigate, useParams } from 'react-router';
+import { Group } from '../../interfaces/group';
+import ItemEditor from '../../components/item-editor/ItemEditor';
+import UndoIcon from '@mui/icons-material/Undo';
+import { Button } from '@mui/material';
 
-const mainContentStyle: React.CSSProperties = {
-  margin: '0 auto',
-  textAlign: 'center',
-}; 
-
-function App() {
-  const { groupId } = useParams();
-
+function Taskboard() {
   const getCurrentGroup = (): Group => {
     const groups: Group[] = JSON.parse(localStorage.getItem('groups') ?? '[]');
     const currentGroup: Group | undefined = groups.find((group: Group) => group.id === parseInt(groupId!));
     return currentGroup!;
   }
 
+  const { groupId } = useParams();
+  const navigate = useNavigate();
   const [tasks, setTasks] = useState(getCurrentGroup().tasks);
   const [isEditing, setIsEditing] = useState(false);
   const [editedTaskId, setEditedTaskId] = useState(0);
@@ -43,7 +41,7 @@ function App() {
 
       if (!existDuplicate) {
         return i;
-      } 
+      }
 
       existDuplicate = false;
     }
@@ -146,18 +144,24 @@ function App() {
   return (
     <div>
       <Header description={getCurrentGroup().name}></Header>
-      <div style={mainContentStyle}>
+      <div className="main-content">
         {
-          isEditing 
+          isEditing
             ? 
               <ItemEditor 
                 label="Add Task"
                 text={tasks.find((task: Task) => task.id === editedTaskId)!.text}
                 confirmEdit={confirmEdit}
               /> 
-            : 
-              <div>        
-                <TaskInput addItem={addTask} label={'Add Task'} />
+            :
+              <div>
+                <div className="tasks-title">
+                  <Button className="back-button" onClick={() => navigate('/')}>
+                    <UndoIcon />
+                  </Button>
+                  <h1 className="current-group-text">{getCurrentGroup().name}</h1>
+                </div>
+                <ItemInput addItem={addTask} label={'Add Task'} />
                 <List style={getTaskListStyle()}>
                   <DndContext onDragEnd={handleDragEnd} modifiers={[restrictToVerticalAxis, restrictToParentElement]}>
                     <SortableContext items={tasks}>
@@ -183,4 +187,4 @@ function App() {
   );
 }
 
-export default App;
+export default Taskboard;

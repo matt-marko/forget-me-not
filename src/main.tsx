@@ -4,7 +4,7 @@ import './index.css'
 import '@fontsource/roboto/700.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Dashboard from './routes/Dashboard.tsx';
-import Taskboard from './routes/Taskboard.tsx';
+import Taskboard from './routes/Taskboard/Taskboard.tsx';
 
 const router = createBrowserRouter([
   {

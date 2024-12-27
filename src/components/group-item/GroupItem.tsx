@@ -61,7 +61,7 @@ function GroupItem(props: GroupItemProps) {
   };
 
   const getCompletedClass = (group: Group): string => {
-    return group.tasks.every(task => task.completed) ? 'completed-group-item' : ''
+    return group.tasks.length && group.tasks.every(task => task.completed) ? 'completed-group-item' : ''
   }
 
   return(

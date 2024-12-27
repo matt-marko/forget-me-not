@@ -19,9 +19,21 @@ function ItemEditor(props: ItemEditorProps) {
 
   return(
     <div>
-      <TextField label={props.label} onChange={handleItemEditorChange} value={editedItemInput} variant="outlined"/>
+      <TextField
+        autoFocus
+        label={props.label}
+        onChange={handleItemEditorChange}
+        value={editedItemInput}
+        variant="outlined"
+        onKeyDown={(event) => {
+          if(event.key === 'Enter') {
+            props.confirmEdit(editedItemInput);
+            setEditedItemInput('');
+          }
+        }}  
+      />
       <Button 
-        className="editorButton"
+        className="editor-button"
         variant="contained"
         color="success"
         onClick={() => props.confirmEdit(editedItemInput)}
