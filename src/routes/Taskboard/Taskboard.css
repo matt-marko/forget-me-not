@@ -2,19 +2,10 @@
   display: inline-flex;
   align-items: center;
   gap: 20px;
+  transform: translateX(-38px);
 }
 
 .main-content {
   margin: 0 auto;
   text-align: center;
-}
-
-.current-group-text {
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.back-button {
-  position: relative;
-  right: 40px;
 }

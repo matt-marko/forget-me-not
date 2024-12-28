@@ -156,10 +156,10 @@ function Taskboard() {
             :
               <div>
                 <div className="tasks-title">
-                  <Button className="back-button" onClick={() => navigate('/')}>
+                  <Button onClick={() => navigate('/')}>
                     <UndoIcon />
                   </Button>
-                  <h1 className="current-group-text">{getCurrentGroup().name}</h1>
+                  <h1>{getCurrentGroup().name}</h1>
                 </div>
                 <ItemInput addItem={addTask} label={'Add Task'} />
                 <List style={getTaskListStyle()}>
