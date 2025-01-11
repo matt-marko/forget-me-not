@@ -35,9 +35,8 @@ const editButtonStyle: React.CSSProperties = {
 
 type GroupItemProps = {
   group: Group;
-  completeTask: Function;
-  deleteTask: Function;
-  editTask: Function;
+  deleteGroup: Function;
+  editGroup: Function;
 }
 
 function GroupItem(props: GroupItemProps) {
@@ -85,7 +84,7 @@ function GroupItem(props: GroupItemProps) {
         <div style={removeButtonStyle}>
           <TaskItemButton 
             item={props.group} 
-            clickHandler={() => props.deleteTask(props.group.id)} 
+            clickHandler={() => props.deleteGroup(props.group.id)} 
             display={isHovered}
             colour='red'
           >
@@ -96,7 +95,7 @@ function GroupItem(props: GroupItemProps) {
           <TaskItemButton
             item={props.group} 
             clickHandler={() => { 
-              props.editTask(props.group.id)
+              props.editGroup(props.group.id)
             }} 
             display={isHovered}
             colour='blue'
