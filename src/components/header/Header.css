@@ -1,6 +1,9 @@
-.groupNameText {
-  text-align: left;
-  margin: 0 0 0 8px;
+.button-container {
+  margin: 0 0 0 16px;
+}
+
+.group-name-text {
+  margin: 0 16px 0 0;
 }
 
 .title {

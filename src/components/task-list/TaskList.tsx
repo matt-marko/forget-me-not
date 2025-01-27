@@ -20,7 +20,7 @@ type TasksListProps = {
   updateTasks: Function;
 }
 
-function TasksList(props: TasksListProps) {
+function TaskList(props: TasksListProps) {
   const navigate = useNavigate();
 
   const dragAndDropHelper = new DragAndDropHelper(props.tasks);
@@ -110,4 +110,4 @@ function TasksList(props: TasksListProps) {
   );
 }
 
-export default TasksList;
+export default TaskList;
