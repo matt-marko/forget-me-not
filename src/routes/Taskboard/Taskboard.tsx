@@ -52,11 +52,11 @@ function Taskboard() {
     <>
       <Header description={getCurrentGroup().name} handleMenuIconClick={() => setIsDrawerOpen(true)} />
       <div className='main-content'>
-      <GroupDrawer
-        isOpen={isDrawerOpen} 
-        groups={groups}
-        handleCloseDrawerClick={() => setIsDrawerOpen(false)}
-      />
+        <GroupDrawer
+          isOpen={isDrawerOpen} 
+          groups={groups}
+          handleCloseDrawerClick={() => setIsDrawerOpen(false)}
+        />
         {
           isEditing
             ?

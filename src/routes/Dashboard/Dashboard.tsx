@@ -40,11 +40,11 @@ function Dashboard() {
     <>
       <Header description='' handleMenuIconClick={() => setIsDrawerOpen(true)} />
       <div className='main-content'>
-      <GroupDrawer 
-        isOpen={isDrawerOpen}
-        groups={groups}
-        handleCloseDrawerClick={() => setIsDrawerOpen(false)}
-      />
+        <GroupDrawer 
+          isOpen={isDrawerOpen}
+          groups={groups}
+          handleCloseDrawerClick={() => setIsDrawerOpen(false)}
+        />
         {
           isEditing 
             ?
