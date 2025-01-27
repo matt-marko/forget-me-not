@@ -5,11 +5,13 @@ import ItemEditor from '../../components/item-editor/ItemEditor';
 import Header from '../../components/header/Header';
 import Footer from '../../components/footer/Footer';
 import GroupList from '../../components/group-list/GroupList';
+import GroupDrawer from '../../components/group-drawer/GroupDrawer';
 
 function Dashboard() {
   const [groups, setGroups] = useState(JSON.parse(localStorage.getItem('groups') ?? '[]'));
   const [isEditing, setIsEditing] = useState(false);
   const [editedGroupId, setEditedGroupId] = useState(0);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const editGroup = (id: number) => {
     setEditedGroupId(id);
@@ -27,17 +29,22 @@ function Dashboard() {
     }
 
     setIsEditing(false);
-  }
+  };
 
   const updateGroups = (newGroups: Group[]): void => {
     localStorage.setItem('groups', JSON.stringify(newGroups));
     setGroups(newGroups);
-  }
+  };
 
   return (
-    <div>
-      <Header description=''></Header>
+    <>
+      <Header description='' handleMenuIconClick={() => setIsDrawerOpen(true)} />
       <div className='main-content'>
+      <GroupDrawer 
+        isOpen={isDrawerOpen}
+        groups={groups}
+        handleCloseDrawerClick={() => setIsDrawerOpen(false)}
+      />
         {
           isEditing 
             ?
@@ -54,8 +61,8 @@ function Dashboard() {
               />
         }
       </div>
-      <Footer></Footer>
-    </div>
+      <Footer />
+    </>
   );
 }
 

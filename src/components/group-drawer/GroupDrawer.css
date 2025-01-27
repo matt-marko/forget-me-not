@@ -1,0 +1,13 @@
+.close-drawer-button {
+  height: 43px;
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.drawer-title {
+  margin: 0 0 0 16px;
+}
