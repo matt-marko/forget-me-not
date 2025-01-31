@@ -32,23 +32,29 @@ function GroupDrawer(props: GroupDrawerProps) {
         </IconButton>
       </div>
       <Divider />
-      <List>
-        {
-          props.groups.map((group: Group) => (
-            <ListItem 
-              key={group.id} 
-              disablePadding
-              onClick={() => navigate(`/groups/${group.id}`)}
-            >
-              <ListItemButton>
-                <ListItemText>
-                  {group.name}
-                </ListItemText>
-              </ListItemButton>
-            </ListItem>
-          ))
-        }
-      </List>
+      {
+        props.groups.length > 0
+          ?
+            <List>
+              {
+                props.groups.map((group: Group) => (
+                  <ListItem 
+                    key={group.id} 
+                    disablePadding
+                    onClick={() => navigate(`/groups/${group.id}`)}
+                  >
+                    <ListItemButton>
+                      <ListItemText>
+                        {group.name}
+                      </ListItemText>
+                    </ListItemButton>
+                  </ListItem>
+                ))
+              }
+            </List>
+          :
+            <p>No groups</p>
+      }
     </Drawer>
   );
 }
