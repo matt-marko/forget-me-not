@@ -53,7 +53,7 @@ function GroupDrawer(props: GroupDrawerProps) {
               }
             </List>
           :
-            <p>No groups</p>
+            <p className='no-groups-text'>No groups</p>
       }
     </Drawer>
   );
