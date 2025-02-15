@@ -32,8 +32,8 @@ function ItemInput(props: ItemInputProps) {
         }}
       />
       <Button 
-        className='addButton'
-        variant="contained"
+        className='add-button'
+        variant='contained'
         onClick={() => {
           props.addItem(itemInput);
           setItemInput('');

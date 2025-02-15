@@ -33,9 +33,9 @@ function ItemEditor(props: ItemEditorProps) {
         }}  
       />
       <Button 
-        className="editor-button"
-        variant="contained"
-        color="success"
+        className='editor-button'
+        variant='contained'
+        color='success'
         onClick={() => props.confirmEdit(editedItemInput)}
       >
         <CheckIcon />

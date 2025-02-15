@@ -16,6 +16,6 @@ export default class DragAndDropHelper {
 
     const newItems = arrayMove(this.items, oldIndex, newIndex);
 
-    return newItems
+    return newItems;
   };
 }

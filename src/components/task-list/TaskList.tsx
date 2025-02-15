@@ -79,7 +79,7 @@ function TaskList(props: TasksListProps) {
 
   return (
     <div>
-      <div className="tasks-title">
+      <div className='tasks-title'>
         <Button onClick={() => navigate('/')}>
           <UndoIcon />
         </Button>

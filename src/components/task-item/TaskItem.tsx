@@ -42,19 +42,19 @@ function TaskItem(props: TaskItemProps) {
 
   return(
     <div style={dragAndDropStyle} ref={setNodeRef} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
-      <ListItem className="taskItem" divider={true}>
+      <ListItem className='task-item' divider={true}>
         <Checkbox 
           checked={props.task.completed}
           onChange={() => props.completeTask(props.task.id)}
         >
         </Checkbox>
         <ListItemText>
-          <div className={`listItemText ${getCompletedClass(props.task.completed)}`} spellCheck={false}>
+          <div className={`list-item-text ${getCompletedClass(props.task.completed)}`} spellCheck={false}>
             {props.task.text}
           </div>
         </ListItemText>
-        <DragHandle {...attributes} {...listeners} className="dragHandle"></DragHandle>
-        <div className="removeButton">
+        <DragHandle {...attributes} {...listeners} className='drag-handle' />
+        <div className='remove-button'>
           <TaskItemButton 
             item={props.task} 
             clickHandler={() => props.deleteTask(props.task.id)} 
@@ -64,7 +64,7 @@ function TaskItem(props: TaskItemProps) {
             <ClearIcon fontSize={'6px' as any}/>
           </TaskItemButton>
         </div>
-        <div className='editButton'>
+        <div className='edit-button'>
           <TaskItemButton
             item={props.task} 
             clickHandler={() => props.editTask(props.task.id)} 

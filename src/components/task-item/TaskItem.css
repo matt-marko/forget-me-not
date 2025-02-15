@@ -1,27 +1,27 @@
-.listItemText {
+.list-item-text {
   padding: 0 15px 0 0;
   min-width: 150px;
 }
 
-.taskItem {
+.task-item {
   background-color: lightblue;
   border-radius: 10px;
   margin: 2px 0 2px 0;
 }
 
-.editButton {
+.edit-button {
   position: absolute;
   right: 10px;
   bottom: 5px;
 }
 
-.removeButton {
+.remove-button {
   position: absolute;
   right: 10px;
   top: 5px;
 }
 
-.dragHandle {
+.drag-handle {
   margin-right: 20px;
   cursor: ns-resize;
 }

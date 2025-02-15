@@ -62,7 +62,7 @@ function Taskboard(props: TaskboardProps) {
         isEditing
           ?
             <ItemEditor 
-              label="Add Task"
+              label='Add Task'
               text={tasks.find((task: Task) => task.id === editedTaskId)!.text}
               confirmEdit={confirmEdit}
             /> 
