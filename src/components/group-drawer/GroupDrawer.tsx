@@ -9,6 +9,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { Group } from '../../interfaces/group';
 import { useNavigate } from 'react-router-dom';
 import { Divider } from '@mui/material';
+import { isGroupCompleted } from '../../services/isGroupCompleted';
 
 type GroupDrawerProps = {
   groups: Group[];
@@ -44,7 +45,7 @@ function GroupDrawer(props: GroupDrawerProps) {
                     onClick={() => navigate(`/groups/${group.id}`)}
                   >
                     <ListItemButton>
-                      <ListItemText>
+                      <ListItemText className={isGroupCompleted(group) ? 'completed-group-item' : ''}>
                         {group.name}
                       </ListItemText>
                     </ListItemButton>

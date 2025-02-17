@@ -5,7 +5,7 @@ import List from "@mui/material/List";
 import { SortableContext } from "@dnd-kit/sortable";
 import { restrictToParentElement, restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { Group } from "../../interfaces/group";
-import IdGenerator from "../../services/IdGenerator";
+import { generateId } from "../../services/generateId";
 import DragAndDropHelper from "../../services/DragAndDropHelper";
 import { Task } from '../../interfaces/task';
 import UndoIcon from '@mui/icons-material/Undo';
@@ -41,7 +41,7 @@ function TaskList(props: TasksListProps) {
     }
 
     const newTask: Task = {
-      id: IdGenerator.generateId(props.tasks),
+      id: generateId(props.tasks),
       text: taskName,
       completed: false,
     };

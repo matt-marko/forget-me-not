@@ -6,8 +6,8 @@ import { SortableContext } from "@dnd-kit/sortable";
 import { restrictToParentElement, restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { Group } from "../../interfaces/group";
 import GroupItem from "../group-item/GroupItem";
-import IdGenerator from "../../services/IdGenerator";
 import DragAndDropHelper from "../../services/DragAndDropHelper";
+import { generateId } from '../../services/generateId';
 
 type GroupListProps = {
   groups: Group[]
@@ -28,7 +28,7 @@ function GroupList(props: GroupListProps) {
     }
 
     const newGroup: Group = {
-      id: IdGenerator.generateId(props.groups),
+      id: generateId(props.groups),
       name: groupName,
       tasks: [],
     };

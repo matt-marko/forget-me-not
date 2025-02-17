@@ -10,6 +10,7 @@ import TaskItemButton from '../item-button/ItemButton';
 import { useState } from 'react';
 import { Group } from '../../interfaces/group';
 import { useNavigate } from "react-router-dom";
+import { isGroupCompleted } from '../../services/isGroupCompleted';
 
 const listItemTextStyle: React.CSSProperties = {
   padding: '0 15px 0 0',
@@ -59,10 +60,6 @@ function GroupItem(props: GroupItemProps) {
     transition,
   };
 
-  const getCompletedClass = (group: Group): string => {
-    return group.tasks.length && group.tasks.every(task => task.completed) ? 'completed-group-item' : ''
-  }
-
   return(
     <div 
       style={dragAndDropStyle}
@@ -76,7 +73,7 @@ function GroupItem(props: GroupItemProps) {
           spellCheck={false}
           style={listItemTextStyle}
         >
-          <div className={getCompletedClass(props.group)}>
+          <div className={isGroupCompleted(props.group) ? 'completed-group-item' : ''}>
             {props.group.name}
           </div>
         </ListItemText>
