@@ -21,3 +21,25 @@
   text-decoration-color:rgba(95, 99, 104, 0.7);
   color: #5F6368;
 }
+
+.group-item-text {
+  padding: 0 15px 0 0;
+  min-width: 150px !important;
+}
+
+.drag-handle {
+  margin-right: 20px;
+  cursor: ns-resize;
+}
+
+.remove-button {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
+
+.edit-button {
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+}

@@ -1,25 +1,52 @@
 /* Red button styles */
 .red {
-    background-image: linear-gradient(145deg, #ff5747, #e6321a);
+ background-image: linear-gradient(145deg, #ff5747, #e6321a);
 }
 
 .red:hover {
-    background-image: linear-gradient(145deg, #ff8477, #f04832);
+  background-image: linear-gradient(145deg, #ff8477, #f04832);
 }
 
 .red:active {
-    background-image: linear-gradient(145deg, #d62818, #b71f14);
+  background-image: linear-gradient(145deg, #d62818, #b71f14);
 }
 
 /* Blue button styles */
 .blue {
-    background-image: linear-gradient(145deg, #3845f5, #5660e8);
+  background-image: linear-gradient(145deg, #3845f5, #5660e8);
 }
 
 .blue:hover {
-    background-image: linear-gradient(145deg, #5f6aff, #7880f8);
+  background-image: linear-gradient(145deg, #5f6aff, #7880f8);
 }
 
 .blue:active { 
-    background-image: linear-gradient(145deg, #2a36d9, #404ccc);
+  background-image: linear-gradient(145deg, #2a36d9, #404ccc);
+}
+
+/* Other styles */
+
+.item-button {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  color: white;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  user-select: none;
+}
+
+.visible {
+  visibility: visible;
+}
+
+.hidden {
+  visibility: hidden;
 }

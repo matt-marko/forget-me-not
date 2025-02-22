@@ -12,28 +12,6 @@ import { Group } from '../../interfaces/group';
 import { useNavigate } from "react-router-dom";
 import { isGroupCompleted } from '../../services/isGroupCompleted';
 
-const listItemTextStyle: React.CSSProperties = {
-  padding: '0 15px 0 0',
-  minWidth: '150px'
-};
-
-const dragHandleStyle: React.CSSProperties = {
-  marginRight: '20px',
-  cursor: 'ns-resize',
-};
-
-const removeButtonStyle: React.CSSProperties = {
-  position: 'absolute',
-  right: '10px',
-  top: '5px',
-}
-
-const editButtonStyle: React.CSSProperties = {
-  position: 'absolute',
-  right: '10px',
-  bottom: '5px',
-}
-
 type GroupItemProps = {
   group: Group;
   deleteGroup: Function;
@@ -60,6 +38,12 @@ function GroupItem(props: GroupItemProps) {
     transition,
   };
 
+  const getGroupItemTextClassName = () => {
+    let className = isGroupCompleted(props.group) ? 'completed-group-item' : '';
+    className += ' group-item-text';
+    return className;
+  };
+
   return(
     <div 
       style={dragAndDropStyle}
@@ -70,15 +54,13 @@ function GroupItem(props: GroupItemProps) {
     >
       <ListItem divider={true} className='group-item'>
         <ListItemText 
+          className={getGroupItemTextClassName()}
           spellCheck={false}
-          style={listItemTextStyle}
         >
-          <div className={isGroupCompleted(props.group) ? 'completed-group-item' : ''}>
-            {props.group.name}
-          </div>
+          {props.group.name}
         </ListItemText>
-        <DragHandle {...attributes} {...listeners} style={dragHandleStyle}></DragHandle>
-        <div style={removeButtonStyle}>
+        <DragHandle {...attributes} {...listeners} className='drag-handle' />
+        <div className='remove-button'>
           <TaskItemButton 
             item={props.group} 
             clickHandler={() => props.deleteGroup(props.group.id)} 
@@ -88,7 +70,7 @@ function GroupItem(props: GroupItemProps) {
             <ClearIcon fontSize={'6px' as any}/>
           </TaskItemButton>
         </div>
-        <div style={editButtonStyle}>
+        <div className='edit-button'>
           <TaskItemButton
             item={props.group} 
             clickHandler={() => { 

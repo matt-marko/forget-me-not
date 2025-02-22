@@ -13,3 +13,12 @@
   left: 50%;
   transform: translateX(-50%);
 }
+
+.app-bar {
+  font-size: 26px;
+  text-align: center;
+  display: inline-flex;
+  flex-direction: row !important;
+  justify-content: space-between;
+  align-items: center;
+}
