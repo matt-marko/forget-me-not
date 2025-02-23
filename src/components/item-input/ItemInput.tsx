@@ -6,7 +6,7 @@ import Container from '@mui/material/Container';
 import AddIcon from '@mui/icons-material/Add';
 
 type ItemInputProps = {
-  addItem: Function;
+  addItem(newItemName: string): void;
   label: string;
 }
 

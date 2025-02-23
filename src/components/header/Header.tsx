@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 type HeaderProps = {
   description: string;
-  handleMenuIconClick: Function;
+  handleMenuIconClick(): void;
 }
 
 function Header(props: HeaderProps) {

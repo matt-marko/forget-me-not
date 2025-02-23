@@ -6,7 +6,7 @@ import CheckIcon from '@mui/icons-material/Check';
 
 type ItemEditorProps = {
   text: string;
-  confirmEdit: Function;
+  confirmEdit(editedText: string): void;
   label: string;
 }
 

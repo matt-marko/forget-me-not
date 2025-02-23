@@ -13,7 +13,7 @@ import { isGroupCompleted } from '../../services/isGroupCompleted';
 
 type GroupDrawerProps = {
   groups: Group[];
-  handleCloseDrawerClick: Function;
+  handleCloseDrawerClick(): void;
   isOpen: boolean;
 }
 

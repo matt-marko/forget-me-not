@@ -11,8 +11,8 @@ import { generateId } from '../../services/generateId';
 
 type GroupListProps = {
   groups: Group[]
-  editGroup: Function;
-  updateGroups: Function;
+  editGroup(groupId: number): void;
+  updateGroups(newGroups: Group[]): void;
 }
 
 function GroupList(props: GroupListProps) {

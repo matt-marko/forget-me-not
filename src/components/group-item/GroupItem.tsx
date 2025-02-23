@@ -14,8 +14,8 @@ import { isGroupCompleted } from '../../services/isGroupCompleted';
 
 type GroupItemProps = {
   group: Group;
-  deleteGroup: Function;
-  editGroup: Function;
+  deleteGroup(groupId: number): void;
+  editGroup(groupId: number): void;
 }
 
 function GroupItem(props: GroupItemProps) {
@@ -67,7 +67,7 @@ function GroupItem(props: GroupItemProps) {
             display={isHovered}
             colour='red'
           >
-            <ClearIcon fontSize={'6px' as any}/>
+            <ClearIcon fontSize={'inherit'}/>
           </TaskItemButton>
         </div>
         <div className='edit-button'>
@@ -79,7 +79,7 @@ function GroupItem(props: GroupItemProps) {
             display={isHovered}
             colour='blue'
           >
-            <EditIcon fontSize={'6px' as any}/>
+            <EditIcon fontSize={'inherit'}/>
           </TaskItemButton>
         </div>
       </ListItem>

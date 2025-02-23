@@ -7,7 +7,7 @@ import ItemEditor from '../../components/item-editor/ItemEditor';
 import TaskList from '../../components/task-list/TaskList';
 
 type TaskboardProps = {
-  updateGroups: Function;
+  updateGroups(newGroups: Group[]): void;
   groups: Group[];
 }
 

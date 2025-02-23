@@ -5,7 +5,7 @@ import ItemEditor from '../../components/item-editor/ItemEditor';
 import GroupList from '../../components/group-list/GroupList';
 
 type DashboardProps = {
-  updateGroups: Function;
+  updateGroups(newGroups: Group[]): void;
   groups: Group[];
 }
 

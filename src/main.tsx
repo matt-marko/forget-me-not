@@ -51,7 +51,7 @@ function App () {
 }
 
 type TaskboardProps = {
-  updateGroups: Function;
+  updateGroups(newGroups: Group[]): void;
   groups: Group[];
 }
 

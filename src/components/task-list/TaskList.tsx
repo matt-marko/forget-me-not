@@ -16,8 +16,8 @@ import { useNavigate } from 'react-router';
 type TasksListProps = {
   groupId: number;
   tasks: Task[];
-  editTask: Function;
-  updateTasks: Function;
+  editTask(taskId: number): void;
+  updateTasks(newTasks: Task[]): void;
 }
 
 function TaskList(props: TasksListProps) {
@@ -73,8 +73,8 @@ function TaskList(props: TasksListProps) {
   };
 
   const updateTasksAfterDragEnd = (event: DragEndEvent): void => {
-    const newGroups: Group[] = dragAndDropHelper.getNewItemsAfterDragEnd(event) as Group[];
-    props.updateTasks(newGroups);
+    const newTasks: Task[] = dragAndDropHelper.getNewItemsAfterDragEnd(event) as Task[];
+    props.updateTasks(newTasks);
   }
 
   return (

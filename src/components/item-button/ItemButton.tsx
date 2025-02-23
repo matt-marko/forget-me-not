@@ -5,7 +5,7 @@ import { Group } from '../../interfaces/group';
 
 type ItemButtonProps = {
   item: Task | Group;
-  clickHandler: Function;
+  clickHandler(itemId?: number): void;
   display: boolean,
   colour: string,
   children: ReactNode

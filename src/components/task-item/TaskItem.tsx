@@ -13,9 +13,9 @@ import { useState } from 'react';
 
 type TaskItemProps = {
   task: Task;
-  completeTask: Function;
-  deleteTask: Function;
-  editTask: Function;
+  completeTask(taskId: number): void;
+  deleteTask(taskId: number): void;
+  editTask(taskId: number): void;
 }
 
 function TaskItem(props: TaskItemProps) {
@@ -61,7 +61,7 @@ function TaskItem(props: TaskItemProps) {
             display={isHovered}
             colour='red'
           >
-            <ClearIcon fontSize={'6px' as any}/>
+            <ClearIcon fontSize={'inherit'}/>
           </TaskItemButton>
         </div>
         <div className='edit-button'>
@@ -71,7 +71,7 @@ function TaskItem(props: TaskItemProps) {
             display={isHovered}
             colour='blue'
           >
-            <EditIcon fontSize={'6px' as any}/>
+            <EditIcon fontSize={'inherit'}/>
           </TaskItemButton>
         </div>
       </ListItem>
