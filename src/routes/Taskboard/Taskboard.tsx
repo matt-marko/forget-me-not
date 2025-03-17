@@ -17,11 +17,6 @@ function Taskboard(props: TaskboardProps) {
     return currentGroup!;
   };
 
-  const { groupId } = useParams();
-  const [tasks, setTasks] = useState(getCurrentGroup().tasks);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedTaskId, setEditedTaskId] = useState(0);
-
   const editTask = (id: number) => {
     setEditedTaskId(id);
     setIsEditing(true);
@@ -55,6 +50,11 @@ function Taskboard(props: TaskboardProps) {
     setTasks(newTasks);
     props.updateGroups(newGroups);
   };
+
+  const { groupId } = useParams();
+  const [tasks, setTasks] = useState<Task[]>(getCurrentGroup().tasks);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [editedTaskId, setEditedTaskId] = useState<number>(0);
 
   return (
     <div className='main-content'>

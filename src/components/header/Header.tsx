@@ -4,10 +4,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 type HeaderProps = {
   description: string;
   handleMenuIconClick(): void;
+  handleExportButtonClick(): void;
+  handleImportButtonClick(): void;
 }
 
 function Header(props: HeaderProps) {
@@ -24,20 +28,26 @@ function Header(props: HeaderProps) {
             sx={{ mr: 2 }}
             onClick={() => navigate('/')}
           >
-            <HomeIcon></HomeIcon>
+            <HomeIcon />
           </IconButton>
           <IconButton 
             edge='start'
             color='inherit'
             aria-label='menu'
-            sx={{ mr: 2 }}
             onClick={() => props.handleMenuIconClick()}
           >
-            <MenuIcon></MenuIcon>
+            <MenuIcon />
           </IconButton>
         </div>
         <p className='title'>Forget Me Not</p>
-        <p className='group-name-text'>{props.description}</p>
+        <div className='backup-buttons'>
+          <IconButton color='inherit' onClick={props.handleExportButtonClick}>
+            <FileUploadIcon/>
+          </IconButton>
+          <IconButton color='inherit'  onClick={props.handleImportButtonClick}>
+            <FileDownloadIcon />
+          </IconButton>
+        </div>
       </AppBar>
     </header>
   );

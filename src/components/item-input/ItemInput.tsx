@@ -11,11 +11,11 @@ type ItemInputProps = {
 }
 
 function ItemInput(props: ItemInputProps) {
-  const [itemInput, setItemInput] = useState('');
-
   const handleItemInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setItemInput(event.target.value);
+    setItemInput(event.target.value);
   };
+
+  const [itemInput, setItemInput] = useState<string>('');
 
   return(
     <Container className='container'>

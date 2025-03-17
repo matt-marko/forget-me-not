@@ -19,6 +19,10 @@ type TaskItemProps = {
 }
 
 function TaskItem(props: TaskItemProps) {
+  const getCompletedClass = (completed: boolean): string => {
+    return completed ? 'completed-task-item' : ''
+  }
+
   const {
     attributes,
     listeners, 
@@ -35,10 +39,6 @@ function TaskItem(props: TaskItemProps) {
     transform: CSS.Transform.toString(transform),
     transition,
   };
-
-  const getCompletedClass = (completed: boolean): string => {
-    return completed ? 'completed-task-item' : ''
-  }
 
   return(
     <div style={dragAndDropStyle} ref={setNodeRef} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
