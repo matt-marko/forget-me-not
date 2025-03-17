@@ -9,8 +9,7 @@ import Header from './components/header/Header.tsx';
 import Footer from './components/footer/Footer.tsx';
 import GroupDrawer from './components/group-drawer/GroupDrawer.tsx';
 import { Group } from './interfaces/group.ts';
-import BackupModal, { ModalType } from './components/modal/modal-wrapper/ModalWrapper.tsx';
-import ModalWrapper from './components/modal/modal-wrapper/ModalWrapper.tsx';
+import ModalWrapper, { ModalType } from './components/modal/modal-wrapper/ModalWrapper.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

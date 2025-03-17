@@ -1,6 +1,6 @@
 import ExportModal from '../export-modal/ExportModal';
 import ImportModal from '../import-modal/ImportModal';
-import './BackupModal.css';
+import './ModalWrapper.css';
 
 export enum ModalType {
   Export,
@@ -16,9 +16,9 @@ type ModalWrapperProps = {
 function ModalWrapper(props: ModalWrapperProps) {
   switch (props.modalType) {
     case ModalType.Export:
-      return <ExportModal open={props.open}/>;
+      return <ExportModal {...props}/>;
     case ModalType.Import:
-      return <ImportModal open={props.open} />;
+      return <ImportModal {...props} />;
     default:
       return null;
   }

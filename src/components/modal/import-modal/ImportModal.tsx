@@ -1,14 +1,24 @@
-import './BackupModal.css';
+import Button from '@mui/material/Button/Button';
+import './ImportModal.css';
 import Modal from '@mui/material/Modal';
+import { useState } from 'react';
 
 type BackupModalProps = {
   open: boolean;
   handleClose(): void;
-  backupType: BackupType | null;
 }
 
 function ImportModal(props: BackupModalProps) {
-  // TODO fix error in textarea
+  const importTasks = () => {
+    console.log(atob(importCode));
+  };
+
+  const handleImportCodeChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setImportCode(event.target.value);
+  };
+
+  const [importCode, setImportCode] = useState<string>('');
+
   return (
     <Modal
       className='backup-modal'
@@ -17,8 +27,10 @@ function ImportModal(props: BackupModalProps) {
     >
       <div className='backup-modal-content'>
         <h1>Import tasks</h1>
-        <textarea value={btoa(localStorage.getItem('groups') ?? '')} />
-        <p>These are your tasks!<br />Copy the code and keep it somewhere safe</p>
+        <textarea value={importCode} onChange={handleImportCodeChange}/>
+        <p>Paste in here the code you received<br />when exporting your tasks</p>
+        <Button onClick={importTasks}>Load</Button>
+        <Button onClick={props.handleClose}>Nevermind!</Button>
       </div>
     </Modal>
   )
