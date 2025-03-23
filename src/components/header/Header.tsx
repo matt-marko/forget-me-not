@@ -44,7 +44,7 @@ function Header(props: HeaderProps) {
           <IconButton color='inherit' onClick={props.handleExportButtonClick}>
             <FileUploadIcon/>
           </IconButton>
-          <IconButton color='inherit'  onClick={props.handleImportButtonClick}>
+          <IconButton color='inherit' onClick={props.handleImportButtonClick}>
             <FileDownloadIcon />
           </IconButton>
         </div>

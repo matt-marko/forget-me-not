@@ -25,7 +25,7 @@ function ImportModal(props: BackupModalProps) {
       props.handleClose();
       navigate('/');
     } catch (error) {
-      console.warn('An error occurred while importing tasks.'); 
+      console.warn('An error occurred while importing tasks:', error); 
       setIsError(true);
     }
   };
@@ -35,7 +35,7 @@ function ImportModal(props: BackupModalProps) {
   };
 
   const getErrorTextClass = (): string => {
-    return `error-text${isError || ' hidden'}`;
+    return `error-text${isError ? '' : ' hidden'}`;
   }
 
   const [importCode, setImportCode] = useState<string>('');

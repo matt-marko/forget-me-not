@@ -37,7 +37,7 @@ function GroupItem(props: GroupItemProps) {
 
   const [isHovered, setHovered] = useState<boolean>(false);
   const navigate = useNavigate();
-  
+
   const dragAndDropStyle = {
     transform: CSS.Transform.toString(transform),
     transition,
