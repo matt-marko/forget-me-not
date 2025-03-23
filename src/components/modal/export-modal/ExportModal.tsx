@@ -23,7 +23,9 @@ function ExportModal(props: BackupModalProps) {
         <Button 
           onClick={props.handleClose}
           variant='contained'
-        >Got it!</Button>
+        >
+          Got it!
+        </Button>
       </div>
     </Modal>
   )
