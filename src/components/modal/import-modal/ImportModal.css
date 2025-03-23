@@ -8,7 +8,19 @@
   justify-content: center;
   align-items: center;
   background-color: white;
-  padding: 10px;
+  padding: 16px;
+}
+
+.error-text {
+  color: #d43b3b;
+}
+
+.load-button {
+  margin-right: 10px !important;
+}
+
+.hidden {
+  display: none;
 }
 
 h1 {

@@ -45,6 +45,7 @@ function App () {
           open={activeModal !== null ? true : false}
           modalType={activeModal}
           handleClose={() => setActiveModal(null)}
+          updateGroups={(groups: Group[]) => updateGroups(groups)}
         />
         <Routes>
           <Route 

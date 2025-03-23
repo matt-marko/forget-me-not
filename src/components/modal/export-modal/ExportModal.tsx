@@ -1,10 +1,12 @@
 import Button from '@mui/material/Button/Button';
 import './ExportModal.css';
 import Modal from '@mui/material/Modal';
+import { Group } from '../../../interfaces/group';
 
 type BackupModalProps = {
   open: boolean;
   handleClose(): void;
+  updateGroups(groups: Group[]): void;
 }
 
 function ExportModal(props: BackupModalProps) {
@@ -18,7 +20,10 @@ function ExportModal(props: BackupModalProps) {
         <h1>Export tasks</h1>
         <textarea readOnly={true} value={btoa(localStorage.getItem('groups') ?? '')} />
         <p>These are your tasks!<br />Copy the code and keep it somewhere safe</p>
-        <Button onClick={props.handleClose}>Got it!</Button>
+        <Button 
+          onClick={props.handleClose}
+          variant='contained'
+        >Got it!</Button>
       </div>
     </Modal>
   )

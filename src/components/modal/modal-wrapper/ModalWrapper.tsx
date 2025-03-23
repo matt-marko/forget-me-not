@@ -1,6 +1,6 @@
+import { Group } from '../../../interfaces/group';
 import ExportModal from '../export-modal/ExportModal';
 import ImportModal from '../import-modal/ImportModal';
-import './ModalWrapper.css';
 
 export enum ModalType {
   Export,
@@ -11,6 +11,7 @@ type ModalWrapperProps = {
   open: boolean;
   handleClose(): void;
   modalType: ModalType | null;
+  updateGroups(groups: Group[]): void;
 }
 
 function ModalWrapper(props: ModalWrapperProps) {
