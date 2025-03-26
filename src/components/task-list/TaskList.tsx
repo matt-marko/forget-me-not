@@ -21,8 +21,6 @@ type TasksListProps = {
 }
 
 function TaskList(props: TasksListProps) {
-  const navigate = useNavigate();
-
   const dragAndDropHelper = new DragAndDropHelper(props.tasks);
 
   const getTaskListClass = (): string => {
@@ -76,6 +74,8 @@ function TaskList(props: TasksListProps) {
     const newTasks: Task[] = dragAndDropHelper.getNewItemsAfterDragEnd(event) as Task[];
     props.updateTasks(newTasks);
   }
+
+  const navigate = useNavigate();
 
   return (
     <div>

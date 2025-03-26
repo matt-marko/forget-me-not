@@ -1,0 +1,22 @@
+.backup-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.backup-modal-content {
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  padding: 16px;
+}
+
+h1 {
+  display: block;
+  font-size: 20px;
+}
+
+textarea {
+  resize: none;
+  height: 100px;
+}

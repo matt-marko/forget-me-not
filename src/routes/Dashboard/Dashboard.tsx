@@ -10,9 +10,6 @@ type DashboardProps = {
 }
 
 function Dashboard(props: DashboardProps) {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedGroupId, setEditedGroupId] = useState(0);
-
   const editGroup = (id: number) => {
     setEditedGroupId(id);
     setIsEditing(true);
@@ -29,6 +26,9 @@ function Dashboard(props: DashboardProps) {
 
     setIsEditing(false);
   };
+
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [editedGroupId, setEditedGroupId] = useState<number>(0);
 
   return (
     <div className='main-content'>

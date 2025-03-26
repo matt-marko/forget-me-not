@@ -11,11 +11,11 @@ type ItemEditorProps = {
 }
 
 function ItemEditor(props: ItemEditorProps) {
-  const [editedItemInput, setEditedItemInput] = useState(props.text);
-
   const handleItemEditorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEditedItemInput(event.target.value);
   };
+
+  const [editedItemInput, setEditedItemInput] = useState<string>(props.text);
 
   return(
     <div>

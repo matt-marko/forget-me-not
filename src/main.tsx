@@ -9,6 +9,7 @@ import Header from './components/header/Header.tsx';
 import Footer from './components/footer/Footer.tsx';
 import GroupDrawer from './components/group-drawer/GroupDrawer.tsx';
 import { Group } from './interfaces/group.ts';
+import ModalWrapper, { ModalType } from './components/modal/modal-wrapper/ModalWrapper.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -17,22 +18,34 @@ createRoot(document.getElementById('root')!).render(
 )
 
 function App () {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [groups, setGroups] = useState(JSON.parse(localStorage.getItem('groups') ?? '[]'));
-
   const updateGroups = (newGroups: Group[]): void => {
     localStorage.setItem('groups', JSON.stringify(newGroups));
     setGroups(newGroups);
   };
 
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+  const [groups, setGroups] = useState<Group[]>(JSON.parse(localStorage.getItem('groups') ?? '[]'));
+  const [activeModal, setActiveModal] = useState<ModalType | null>(null);
+
   return (
     <>
       <BrowserRouter>
-        <Header description='' handleMenuIconClick={() => setIsDrawerOpen(true)} />
+        <Header 
+          description=''
+          handleMenuIconClick={() => setIsDrawerOpen(true)}
+          handleExportButtonClick={() => setActiveModal(ModalType.Export)}
+          handleImportButtonClick={() => setActiveModal(ModalType.Import)}
+        />
         <GroupDrawer
           isOpen={isDrawerOpen}
           groups={groups}
           handleCloseDrawerClick={() => setIsDrawerOpen(false)}
+        />
+        <ModalWrapper
+          open={activeModal !== null ? true : false}
+          modalType={activeModal}
+          handleClose={() => setActiveModal(null)}
+          updateGroups={(groups: Group[]) => updateGroups(groups)}
         />
         <Routes>
           <Route 

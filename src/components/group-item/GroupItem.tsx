@@ -19,6 +19,12 @@ type GroupItemProps = {
 }
 
 function GroupItem(props: GroupItemProps) {
+  const getGroupItemTextClassName = () => {
+    let className = isGroupCompleted(props.group) ? 'completed-group-item' : '';
+    className += ' group-item-text';
+    return className;
+  };
+
   const {
     attributes,
     listeners, 
@@ -29,21 +35,14 @@ function GroupItem(props: GroupItemProps) {
     id: props.group.id,
   });
 
-  const [isHovered, setHovered] = useState(false);
-
+  const [isHovered, setHovered] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const dragAndDropStyle = {
     transform: CSS.Transform.toString(transform),
     transition,
   };
-
-  const getGroupItemTextClassName = () => {
-    let className = isGroupCompleted(props.group) ? 'completed-group-item' : '';
-    className += ' group-item-text';
-    return className;
-  };
-
+  
   return(
     <div 
       style={dragAndDropStyle}
