@@ -1,4 +1,4 @@
-import { StrictMode, useState } from 'react'
+import { StrictMode, useContext, useReducer, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import '@fontsource/roboto/700.css';
@@ -10,6 +10,7 @@ import Footer from './components/footer/Footer.tsx';
 import GroupDrawer from './components/group-drawer/GroupDrawer.tsx';
 import { Group } from './interfaces/group.ts';
 import ModalWrapper, { ModalType } from './components/modal/modal-wrapper/ModalWrapper.tsx';
+import { GroupsContext } from './services/context.ts';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -26,6 +27,9 @@ function App () {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const [groups, setGroups] = useState<Group[]>(JSON.parse(localStorage.getItem('groups') ?? '[]'));
   const [activeModal, setActiveModal] = useState<ModalType | null>(null);
+
+  //const groupsC = useContext(GroupsContext);
+  //const [groupsC, dispatch] = useReducer()
 
   return (
     <>
