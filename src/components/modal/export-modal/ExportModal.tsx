@@ -1,12 +1,10 @@
 import Button from '@mui/material/Button/Button';
 import './ExportModal.css';
 import Modal from '@mui/material/Modal';
-import { Group } from '../../../interfaces/group';
 
 type BackupModalProps = {
   open: boolean;
   handleClose(): void;
-  updateGroups(groups: Group[]): void;
 }
 
 function ExportModal(props: BackupModalProps) {

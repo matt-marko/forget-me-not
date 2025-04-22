@@ -41,7 +41,11 @@ function TaskItem(props: TaskItemProps) {
   };
 
   return(
-    <div style={dragAndDropStyle} ref={setNodeRef} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+    <div style={dragAndDropStyle} 
+      ref={setNodeRef} 
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
       <ListItem className='task-item' divider={true}>
         <Checkbox 
           checked={props.task.completed}

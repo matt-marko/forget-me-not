@@ -1,19 +1,16 @@
 import './Taskboard.css';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Task } from '../../interfaces/task';
 import { useParams } from 'react-router';
 import { Group } from '../../interfaces/group';
 import ItemEditor from '../../components/item-editor/ItemEditor';
 import TaskList from '../../components/task-list/TaskList';
+import { GroupsContext, GroupsDispatchContext } from '../../services/Context';
+import { DispatchEditTaskText, GroupsReducerActionType } from '../../services/Reducer';
 
-type TaskboardProps = {
-  updateGroups(newGroups: Group[]): void;
-  groups: Group[];
-}
-
-function Taskboard(props: TaskboardProps) {
+function Taskboard() {
   const getCurrentGroup = (): Group => {
-    const currentGroup: Group | undefined = props.groups.find((group: Group) => group.id === parseInt(groupId!));
+    const currentGroup: Group | undefined = groups.find((group: Group) => group.id === parseInt(groupId!));
     return currentGroup!;
   };
 
@@ -23,38 +20,25 @@ function Taskboard(props: TaskboardProps) {
   };
 
   const confirmEdit = (newText: string): void => {
-    const taskToEdit: Task | undefined = tasks.find((item: Task) => item.id === editedTaskId);
+    const taskToEdit: Task = tasks.find((item: Task) => item.id === editedTaskId)!;
 
-    if (taskToEdit) {
-      taskToEdit.text = newText;
-
-      const newTasks: Task[] = [...tasks];
-      updateTasks(newTasks);
-    }
+    groupsDispatch({
+      type: GroupsReducerActionType.EditTaskText,
+      taskId: taskToEdit.id,
+      groupId: parseInt(groupId!),
+      newText,
+    } as DispatchEditTaskText);
 
     setIsEditing(false);
   };
 
-  const updateTasks = (newTasks: Task[]): void => {
-    const currentGroup = getCurrentGroup();
-    currentGroup.tasks = newTasks;
-
-    const newGroups = props.groups.map((group: Group) => {
-      if (group.id === currentGroup.id) {
-        return currentGroup;
-      } else {
-        return group;
-      }
-    })
-
-    setTasks(newTasks);
-    props.updateGroups(newGroups);
-  };
-
   const { groupId } = useParams();
-  const [tasks, setTasks] = useState<Task[]>(getCurrentGroup().tasks);
+  const groups = useContext(GroupsContext);
+  const groupsDispatch = useContext(GroupsDispatchContext);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editedTaskId, setEditedTaskId] = useState<number>(0);
+
+  const tasks = getCurrentGroup().tasks;
 
   return (
     <div className='main-content'>
@@ -71,7 +55,6 @@ function Taskboard(props: TaskboardProps) {
               groupId={parseInt(groupId!)}
               tasks={tasks}
               editTask={editTask}
-              updateTasks={updateTasks}
             />
       }
     </div>

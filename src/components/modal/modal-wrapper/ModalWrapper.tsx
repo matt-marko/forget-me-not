@@ -1,4 +1,3 @@
-import { Group } from '../../../interfaces/group';
 import ExportModal from '../export-modal/ExportModal';
 import ImportModal from '../import-modal/ImportModal';
 
@@ -11,7 +10,6 @@ type ModalWrapperProps = {
   open: boolean;
   handleClose(): void;
   modalType: ModalType | null;
-  updateGroups(groups: Group[]): void;
 }
 
 function ModalWrapper(props: ModalWrapperProps) {

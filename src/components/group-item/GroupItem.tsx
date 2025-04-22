@@ -7,14 +7,15 @@ import DragHandle from '@mui/icons-material/DragHandle';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import TaskItemButton from '../item-button/ItemButton';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Group } from '../../interfaces/group';
 import { useNavigate } from "react-router-dom";
-import { isGroupCompleted } from '../../services/isGroupCompleted';
+import { isGroupCompleted } from '../../util/GroupHelpers';
+import { GroupsDispatchContext } from '../../services/Context';
+import { DispatchDeleteGroup, GroupsReducerActionType } from '../../services/Reducer';
 
 type GroupItemProps = {
   group: Group;
-  deleteGroup(groupId: number): void;
   editGroup(groupId: number): void;
 }
 
@@ -24,6 +25,13 @@ function GroupItem(props: GroupItemProps) {
     className += ' group-item-text';
     return className;
   };
+
+  const deleteGroup = () => {
+    groupsDispatch({
+      type: GroupsReducerActionType.DeleteGroup,
+      id: props.group.id
+    } as DispatchDeleteGroup);
+  }
 
   const {
     attributes,
@@ -37,6 +45,7 @@ function GroupItem(props: GroupItemProps) {
 
   const [isHovered, setHovered] = useState<boolean>(false);
   const navigate = useNavigate();
+  const groupsDispatch = useContext(GroupsDispatchContext);
 
   const dragAndDropStyle = {
     transform: CSS.Transform.toString(transform),
@@ -62,7 +71,7 @@ function GroupItem(props: GroupItemProps) {
         <div className='remove-button'>
           <TaskItemButton 
             item={props.group} 
-            clickHandler={() => props.deleteGroup(props.group.id)} 
+            clickHandler={deleteGroup} 
             display={isHovered}
             colour='red'
           >
