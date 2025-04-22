@@ -6,20 +6,17 @@ import { SortableContext } from "@dnd-kit/sortable";
 import { restrictToParentElement, restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { Group } from "../../interfaces/group";
 import GroupItem from "../group-item/GroupItem";
-import DragAndDropHelper from "../../services/DragAndDropHelper";
-import { generateId } from '../../services/generateId';
+import { useContext } from 'react';
+import { DispatchAddGroup, DispatchEditGroupOrder, GroupsReducerActionType } from '../../services/Reducer';
+import { GroupsContext, GroupsDispatchContext } from '../../services/Context';
 
 type GroupListProps = {
-  groups: Group[]
   editGroup(groupId: number): void;
-  updateGroups(newGroups: Group[]): void;
 }
 
 function GroupList(props: GroupListProps) {
-  const dragAndDropHelper = new DragAndDropHelper(props.groups);
-
   const getGroupsListClass = (): string => {
-    return props.groups.length ? 'group-list extra-padding' : 'group-list';
+    return groups.length ? 'group-list extra-padding' : 'group-list';
   };
 
   const addGroup = (groupName: string): void => {
@@ -27,26 +24,22 @@ function GroupList(props: GroupListProps) {
       return;
     }
 
-    const newGroup: Group = {
-      id: generateId(props.groups),
-      name: groupName,
-      tasks: [],
-    };
-
-    const newGroups: Group[] = [...props.groups, newGroup];
-
-    props.updateGroups(newGroups);
+    groupsDispatch({
+      groupName,
+      type: GroupsReducerActionType.AddGroup,
+    } as DispatchAddGroup);
   };
 
-  const deleteGroup = (id: number): void => {
-    const remainingItems: Group[] = props.groups.filter((item: Group) => item.id !== id);
-    props.updateGroups(remainingItems);
-  };
-
-  const updateGroupsAfterDragEnd = (event: DragEndEvent): void => {
-    const newGroups: Group[] = dragAndDropHelper.getNewItemsAfterDragEnd(event) as Group[];
-    props.updateGroups(newGroups);
+  const updateGroupsAfterDragEnd = (dragEndEvent: DragEndEvent): void => {
+    groupsDispatch({
+      type: GroupsReducerActionType.EditGroupOrder,
+      dragEndEvent,
+      groups,
+    } as DispatchEditGroupOrder);
   }
+
+  const groups = useContext(GroupsContext);
+  const groupsDispatch = useContext(GroupsDispatchContext);
 
   return (
     <div>
@@ -56,13 +49,12 @@ function GroupList(props: GroupListProps) {
           onDragEnd={updateGroupsAfterDragEnd}
           modifiers={[restrictToVerticalAxis, restrictToParentElement]}
         >
-          <SortableContext items={props.groups}>
-            {props.groups.map((group: Group) => {
+          <SortableContext items={groups}>
+            {groups.map((group: Group) => {
               return (
                 <GroupItem
                   key={group.id}
                   group={group}
-                  deleteGroup={deleteGroup}
                   editGroup={props.editGroup}
                 />
               );

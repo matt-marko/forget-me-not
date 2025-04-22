@@ -8,28 +8,22 @@ import Taskboard from './routes/Taskboard/Taskboard.tsx';
 import Header from './components/header/Header.tsx';
 import Footer from './components/footer/Footer.tsx';
 import GroupDrawer from './components/group-drawer/GroupDrawer.tsx';
-import { Group } from './interfaces/group.ts';
 import ModalWrapper, { ModalType } from './components/modal/modal-wrapper/ModalWrapper.tsx';
+import { GroupsProvider } from './services/GroupsProvider.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
   </StrictMode>,
-)
+);
 
-function App () {
-  const updateGroups = (newGroups: Group[]): void => {
-    localStorage.setItem('groups', JSON.stringify(newGroups));
-    setGroups(newGroups);
-  };
-
+function App() {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
-  const [groups, setGroups] = useState<Group[]>(JSON.parse(localStorage.getItem('groups') ?? '[]'));
   const [activeModal, setActiveModal] = useState<ModalType | null>(null);
 
   return (
-    <>
-      <BrowserRouter>
+    <BrowserRouter>
+      <GroupsProvider>
         <Header 
           description=''
           handleMenuIconClick={() => setIsDrawerOpen(true)}
@@ -38,38 +32,31 @@ function App () {
         />
         <GroupDrawer
           isOpen={isDrawerOpen}
-          groups={groups}
           handleCloseDrawerClick={() => setIsDrawerOpen(false)}
         />
         <ModalWrapper
           open={activeModal !== null ? true : false}
           modalType={activeModal}
           handleClose={() => setActiveModal(null)}
-          updateGroups={(groups: Group[]) => updateGroups(groups)}
         />
         <Routes>
           <Route 
             path='/'
-            element={<Dashboard updateGroups={updateGroups} groups={groups}/>}
+            element={<Dashboard />}
           />
           <Route 
             path='/groups/:groupId'
-            element={<TaskboardRouter updateGroups={updateGroups} groups={groups}/>}
+            element={<TaskboardRouter />}
           />
         </Routes>
         <Footer />
-      </BrowserRouter>
-    </>
+      </GroupsProvider>
+    </BrowserRouter>
   )
 }
 
-type TaskboardProps = {
-  updateGroups(newGroups: Group[]): void;
-  groups: Group[];
-}
-
 // This forces the component to re-render when navigating between groups
-function TaskboardRouter(props: TaskboardProps) {
+function TaskboardRouter() {
   const { groupId } = useParams();
-  return <Taskboard updateGroups={props.updateGroups} groups={props.groups} key={groupId}/>;
+  return <Taskboard key={groupId}/>;
 }

@@ -9,16 +9,18 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { Group } from '../../interfaces/group';
 import { useNavigate } from 'react-router-dom';
 import { Divider } from '@mui/material';
-import { isGroupCompleted } from '../../services/isGroupCompleted';
+import { isGroupCompleted } from '../../util/GroupHelpers';
+import { useContext } from 'react';
+import { GroupsContext } from '../../services/Context';
 
 type GroupDrawerProps = {
-  groups: Group[];
   handleCloseDrawerClick(): void;
   isOpen: boolean;
 }
 
 function GroupDrawer(props: GroupDrawerProps) {
   const navigate = useNavigate();
+  const groups = useContext(GroupsContext);
 
   return(
     <Drawer
@@ -34,11 +36,11 @@ function GroupDrawer(props: GroupDrawerProps) {
       </div>
       <Divider />
       {
-        props.groups.length > 0
+        groups.length > 0
           ?
             <List>
               {
-                props.groups.map((group: Group) => (
+                groups.map((group: Group) => (
                   <ListItem 
                     key={group.id} 
                     disablePadding

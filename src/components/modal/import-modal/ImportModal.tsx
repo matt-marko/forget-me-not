@@ -1,14 +1,14 @@
 import Button from '@mui/material/Button/Button';
 import './ImportModal.css';
 import Modal from '@mui/material/Modal';
-import { useState } from 'react';
-import { Group } from '../../../interfaces/group';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { GroupsDispatchContext } from '../../../services/Context';
+import { DispatchSetAllGroups, GroupsReducerActionType } from '../../../services/Reducer';
 
 type BackupModalProps = {
   open: boolean;
   handleClose(): void;
-  updateGroups(groups: Group[]): void;
 }
 
 function ImportModal(props: BackupModalProps) {
@@ -21,7 +21,11 @@ function ImportModal(props: BackupModalProps) {
 
       localStorage.setItem('groups', JSON.stringify(parsedTasks));
 
-      props.updateGroups(parsedTasks);
+      groupsDispatch({
+        type: GroupsReducerActionType.SetAllGroups,
+        groups: parsedTasks,
+      } as DispatchSetAllGroups);
+
       props.handleClose();
       navigate('/');
     } catch (error) {
@@ -41,6 +45,7 @@ function ImportModal(props: BackupModalProps) {
   const [importCode, setImportCode] = useState<string>('');
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
+  const groupsDispatch = useContext(GroupsDispatchContext);
 
   return (
     <Modal

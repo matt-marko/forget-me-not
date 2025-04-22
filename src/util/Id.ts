@@ -1,4 +1,4 @@
-export const generateId = (items: Array<{id: number}>): number => {
+export function generateId(items: Array<{id: number}>): number {
   let existDuplicate = false;
 
   for (let i = 1; i < items.length + 1; i++) {

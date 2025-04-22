@@ -1,34 +1,32 @@
 import './Dashboard.css';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Group } from '../../interfaces/group';
 import ItemEditor from '../../components/item-editor/ItemEditor';
 import GroupList from '../../components/group-list/GroupList';
+import { GroupsContext, GroupsDispatchContext } from '../../services/Context';
+import { DispatchEditGroupName, GroupsReducerActionType } from '../../services/Reducer';
 
-type DashboardProps = {
-  updateGroups(newGroups: Group[]): void;
-  groups: Group[];
-}
-
-function Dashboard(props: DashboardProps) {
+function Dashboard() {
   const editGroup = (id: number) => {
     setEditedGroupId(id);
     setIsEditing(true);
   };
 
   const confirmEdit = (newName: string): void => {
-    const groupToEdit: Group | undefined = props.groups.find((item: Group) => item.id === editedGroupId);
-
-    if (groupToEdit) {
-      groupToEdit.name = newName;
-      const newGroups: Group[] = [...props.groups];
-      props.updateGroups(newGroups);
-    }
+    groupsDispatch({
+      type: GroupsReducerActionType.EditGroupName,
+      id: editedGroupId,
+      newName,
+    } as DispatchEditGroupName);
 
     setIsEditing(false);
   };
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editedGroupId, setEditedGroupId] = useState<number>(0);
+  
+  const groups = useContext(GroupsContext);
+  const groupsDispatch = useContext(GroupsDispatchContext);
 
   return (
     <div className='main-content'>
@@ -37,15 +35,11 @@ function Dashboard(props: DashboardProps) {
           ?
             <ItemEditor
               label='Edit Group'
-              text={props.groups.find((group: Group) => group.id === editedGroupId)!.name} 
+              text={groups.find((group: Group) => group.id === editedGroupId)!.name} 
               confirmEdit={confirmEdit}
             />
           :
-            <GroupList
-              groups={props.groups}
-              updateGroups={props.updateGroups}
-              editGroup={editGroup} 
-            />
+            <GroupList editGroup={editGroup} />
       }
     </div>
   );
