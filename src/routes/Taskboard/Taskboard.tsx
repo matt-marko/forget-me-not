@@ -8,18 +8,27 @@ import TaskList from '../../components/task-list/TaskList';
 import { GroupsContext, GroupsDispatchContext } from '../../services/Context';
 import { DispatchEditTaskText, GroupsReducerActionType } from '../../services/Reducer';
 
-function Taskboard() {
-  const getCurrentGroup = (): Group => {
+export default function Taskboard() {
+  const { groupId } = useParams();
+  const groups = useContext(GroupsContext);
+  const groupsDispatch = useContext(GroupsDispatchContext);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [editedTaskId, setEditedTaskId] = useState<number>(0);
+
+  const tasks = getCurrentGroup().tasks;
+
+
+  function getCurrentGroup(): Group {
     const currentGroup: Group | undefined = groups.find((group: Group) => group.id === parseInt(groupId!));
     return currentGroup!;
   };
 
-  const editTask = (id: number) => {
+  function editTask(id: number) {
     setEditedTaskId(id);
     setIsEditing(true);
   };
 
-  const confirmEdit = (newText: string): void => {
+  function confirmEdit(newText: string): void {
     const taskToEdit: Task = tasks.find((item: Task) => item.id === editedTaskId)!;
 
     groupsDispatch({
@@ -31,14 +40,6 @@ function Taskboard() {
 
     setIsEditing(false);
   };
-
-  const { groupId } = useParams();
-  const groups = useContext(GroupsContext);
-  const groupsDispatch = useContext(GroupsDispatchContext);
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [editedTaskId, setEditedTaskId] = useState<number>(0);
-
-  const tasks = getCurrentGroup().tasks;
 
   return (
     <div className='main-content'>
@@ -60,5 +61,3 @@ function Taskboard() {
     </div>
   );
 }
-
-export default Taskboard;

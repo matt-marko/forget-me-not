@@ -6,13 +6,19 @@ import GroupList from '../../components/group-list/GroupList';
 import { GroupsContext, GroupsDispatchContext } from '../../services/Context';
 import { DispatchEditGroupName, GroupsReducerActionType } from '../../services/Reducer';
 
-function Dashboard() {
-  const editGroup = (id: number) => {
+export default function Dashboard() {
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [editedGroupId, setEditedGroupId] = useState<number>(0);
+  
+  const groups = useContext(GroupsContext);
+  const groupsDispatch = useContext(GroupsDispatchContext);
+
+  function editGroup(id: number): void {
     setEditedGroupId(id);
     setIsEditing(true);
-  };
+  }
 
-  const confirmEdit = (newName: string): void => {
+  function confirmEdit(newName: string): void {
     groupsDispatch({
       type: GroupsReducerActionType.EditGroupName,
       id: editedGroupId,
@@ -21,12 +27,6 @@ function Dashboard() {
 
     setIsEditing(false);
   };
-
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [editedGroupId, setEditedGroupId] = useState<number>(0);
-  
-  const groups = useContext(GroupsContext);
-  const groupsDispatch = useContext(GroupsDispatchContext);
 
   return (
     <div className='main-content'>
@@ -44,5 +44,3 @@ function Dashboard() {
     </div>
   );
 }
-
-export default Dashboard;

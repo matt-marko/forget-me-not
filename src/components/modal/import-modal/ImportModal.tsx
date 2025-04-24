@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button/Button';
 import './ImportModal.css';
 import Modal from '@mui/material/Modal';
-import { useContext, useState } from 'react';
+import { useContext, useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GroupsDispatchContext } from '../../../services/Context';
 import { DispatchSetAllGroups, GroupsReducerActionType } from '../../../services/Reducer';
@@ -11,8 +11,13 @@ type BackupModalProps = {
   handleClose(): void;
 }
 
-function ImportModal(props: BackupModalProps) {
-  const importTasks = () => {
+export default function ImportModal(props: BackupModalProps) {
+  const [importCode, setImportCode] = useState<string>('');
+  const [isError, setIsError] = useState(false);
+  const navigate = useNavigate();
+  const groupsDispatch = useContext(GroupsDispatchContext);
+
+  function importTasks(): void {
     try {
       const decodedTasks = atob(importCode);
 
@@ -34,18 +39,13 @@ function ImportModal(props: BackupModalProps) {
     }
   };
 
-  const handleImportCodeChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  function handleImportCodeChange(event: ChangeEvent<HTMLTextAreaElement>): void {
     setImportCode(event.target.value);
   };
 
-  const getErrorTextClass = (): string => {
+  function getErrorTextClass(): string {
     return `error-text${isError ? '' : ' hidden'}`;
   }
-
-  const [importCode, setImportCode] = useState<string>('');
-  const [isError, setIsError] = useState(false);
-  const navigate = useNavigate();
-  const groupsDispatch = useContext(GroupsDispatchContext);
 
   return (
     <Modal
@@ -76,5 +76,3 @@ function ImportModal(props: BackupModalProps) {
     </Modal>
   )
 }
-
-export default ImportModal;

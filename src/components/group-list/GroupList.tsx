@@ -14,12 +14,15 @@ type GroupListProps = {
   editGroup(groupId: number): void;
 }
 
-function GroupList(props: GroupListProps) {
-  const getGroupsListClass = (): string => {
+export default function GroupList(props: GroupListProps) {
+  const groups = useContext(GroupsContext);
+  const groupsDispatch = useContext(GroupsDispatchContext);
+  
+  function getGroupsListClass(): string {
     return groups.length ? 'group-list extra-padding' : 'group-list';
   };
 
-  const addGroup = (groupName: string): void => {
+  function addGroup(groupName: string): void {
     if (!groupName) {
       return;
     }
@@ -30,16 +33,13 @@ function GroupList(props: GroupListProps) {
     } as DispatchAddGroup);
   };
 
-  const updateGroupsAfterDragEnd = (dragEndEvent: DragEndEvent): void => {
+  function updateGroupsAfterDragEnd(dragEndEvent: DragEndEvent): void {
     groupsDispatch({
       type: GroupsReducerActionType.EditGroupOrder,
       dragEndEvent,
       groups,
     } as DispatchEditGroupOrder);
   }
-
-  const groups = useContext(GroupsContext);
-  const groupsDispatch = useContext(GroupsDispatchContext);
 
   return (
     <div>
@@ -65,5 +65,3 @@ function GroupList(props: GroupListProps) {
     </div>
   );
 }
-
-export default GroupList;

@@ -18,7 +18,7 @@ type GroupDrawerProps = {
   isOpen: boolean;
 }
 
-function GroupDrawer(props: GroupDrawerProps) {
+export default function GroupDrawer(props: GroupDrawerProps) {
   const navigate = useNavigate();
   const groups = useContext(GroupsContext);
 
@@ -61,5 +61,3 @@ function GroupDrawer(props: GroupDrawerProps) {
     </Drawer>
   );
 }
-
-export default GroupDrawer;

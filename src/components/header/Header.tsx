@@ -14,7 +14,7 @@ type HeaderProps = {
   handleImportButtonClick(): void;
 }
 
-function Header(props: HeaderProps) {
+export default function Header(props: HeaderProps) {
   const navigate = useNavigate();
 
   return(
@@ -52,5 +52,3 @@ function Header(props: HeaderProps) {
     </header>
   );
 }
-
-export default Header;

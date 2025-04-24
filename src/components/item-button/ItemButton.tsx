@@ -11,8 +11,8 @@ type ItemButtonProps = {
   children: ReactNode
 }
 
-function TaskItemButton(props: ItemButtonProps) {
-  const getButtonClassName = () => {
+export default function TaskItemButton(props: ItemButtonProps) {
+  function getButtonClassName(): string {
     let name = `item-button ${props.colour} `;
     name += props.display ? 'visible' : 'hidden';
     return name;
@@ -26,9 +26,7 @@ function TaskItemButton(props: ItemButtonProps) {
       }} 
       className={getButtonClassName()}
     >
-    {props.children}
+      {props.children}
     </button>
   );
 }
-
-export default TaskItemButton;

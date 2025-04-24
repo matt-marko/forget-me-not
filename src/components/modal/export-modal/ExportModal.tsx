@@ -7,7 +7,7 @@ type BackupModalProps = {
   handleClose(): void;
 }
 
-function ExportModal(props: BackupModalProps) {
+export default function ExportModal(props: BackupModalProps) {
   return (
     <Modal
       className='backup-modal'
@@ -28,5 +28,3 @@ function ExportModal(props: BackupModalProps) {
     </Modal>
   )
 }
-
-export default ExportModal;

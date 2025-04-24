@@ -20,17 +20,23 @@ type TasksListProps = {
   editTask: (id: number) => void;
 }
 
-function TaskList(props: TasksListProps) {
-  const getTaskListClass = (): string => {
+export default function TaskList(props: TasksListProps) {
+  const navigate = useNavigate();
+  const groups = useContext(GroupsContext);
+  const groupsDispatch = useContext(GroupsDispatchContext);
+
+  const currentGroup = getCurrentGroup();
+
+  function getTaskListClass(): string {
     return props.tasks.length ? 'task-list extra-padding' : 'task-list';
   };
 
-  const getCurrentGroup = (): Group => {
+  function getCurrentGroup(): Group {
     const currentGroup: Group | undefined = groups.find((group: Group) => group.id === props.groupId);
     return currentGroup!;
   }
 
-  const addTask = (taskText: string): void => {
+  function addTask(taskText: string): void {
     if (!taskText) {
       return;
     }
@@ -42,7 +48,7 @@ function TaskList(props: TasksListProps) {
     } as DispatchAddTask);
   };
 
-  const completeTask = (taskId: number): void => {
+  function completeTask(taskId: number): void {
     groupsDispatch({
       type: GroupsReducerActionType.CompleteTask,
       taskId,
@@ -50,7 +56,7 @@ function TaskList(props: TasksListProps) {
     } as DispatchCompleteTask);
   }
 
-  const deleteTask = (taskId: number): void => {
+  function deleteTask(taskId: number): void {
     groupsDispatch({
       type: GroupsReducerActionType.DeleteTask,
       taskId,
@@ -58,7 +64,7 @@ function TaskList(props: TasksListProps) {
     } as DispatchDeleteTask);
   };
 
-  const updateTasksAfterDragEnd = (dragEndEvent: DragEndEvent): void => {
+  function updateTasksAfterDragEnd(dragEndEvent: DragEndEvent): void {
     groupsDispatch({
       type: GroupsReducerActionType.EditTaskOrder,
       dragEndEvent,
@@ -66,12 +72,6 @@ function TaskList(props: TasksListProps) {
       groupId: currentGroup.id,
     } as DispatchEditTaskOrder);
   }
-
-  const navigate = useNavigate();
-  const groups = useContext(GroupsContext);
-  const groupsDispatch = useContext(GroupsDispatchContext);
-
-  const currentGroup = getCurrentGroup();
 
   return (
     <div>
@@ -105,5 +105,3 @@ function TaskList(props: TasksListProps) {
     </div>
   );
 }
-
-export default TaskList;

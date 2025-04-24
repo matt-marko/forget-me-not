@@ -18,10 +18,8 @@ type TaskItemProps = {
   editTask(taskId: number): void;
 }
 
-function TaskItem(props: TaskItemProps) {
-  const getCompletedClass = (completed: boolean): string => {
-    return completed ? 'completed-task-item' : ''
-  }
+export default function TaskItem(props: TaskItemProps) {
+  const [isHovered, setHovered] = useState(false);
 
   const {
     attributes,
@@ -33,12 +31,14 @@ function TaskItem(props: TaskItemProps) {
     id: props.task.id,
   });
 
-  const [isHovered, setHovered] = useState(false);
-
   const dragAndDropStyle = {
     transform: CSS.Transform.toString(transform),
     transition,
   };
+
+  function getCompletedClass(completed: boolean): string {
+    return completed ? 'completed-task-item' : '';
+  }
 
   return(
     <div style={dragAndDropStyle} 
@@ -82,5 +82,3 @@ function TaskItem(props: TaskItemProps) {
     </div>
   );
 }
-
-export default TaskItem;

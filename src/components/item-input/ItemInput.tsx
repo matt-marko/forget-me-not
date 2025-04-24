@@ -1,5 +1,5 @@
 import './ItemInput.css';
-import React, { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container';
@@ -10,12 +10,12 @@ type ItemInputProps = {
   label: string;
 }
 
-function ItemInput(props: ItemInputProps) {
-  const handleItemInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+export default function ItemInput(props: ItemInputProps) {
+  const [itemInput, setItemInput] = useState<string>('');
+
+  function handleItemInputChange(event: ChangeEvent<HTMLInputElement>): void {
     setItemInput(event.target.value);
   };
-
-  const [itemInput, setItemInput] = useState<string>('');
 
   return(
     <Container className='container'>
@@ -44,5 +44,3 @@ function ItemInput(props: ItemInputProps) {
     </Container>
   );
 }
-
-export default ItemInput;

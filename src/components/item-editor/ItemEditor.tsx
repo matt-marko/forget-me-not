@@ -1,6 +1,6 @@
 import './ItemEditor.css';
 import TextField from '@mui/material/TextField';
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 import Button from '@mui/material/Button';
 import CheckIcon from '@mui/icons-material/Check';
 
@@ -10,12 +10,12 @@ type ItemEditorProps = {
   label: string;
 }
 
-function ItemEditor(props: ItemEditorProps) {
-  const handleItemEditorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+export default function ItemEditor(props: ItemEditorProps) {
+  const [editedItemInput, setEditedItemInput] = useState<string>(props.text);
+  
+  function handleItemEditorChange(event: ChangeEvent<HTMLInputElement>): void {
     setEditedItemInput(event.target.value);
   };
-
-  const [editedItemInput, setEditedItemInput] = useState<string>(props.text);
 
   return(
     <div>
@@ -43,5 +43,3 @@ function ItemEditor(props: ItemEditorProps) {
     </div>
   );
 }
-
-export default ItemEditor;

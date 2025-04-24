@@ -19,7 +19,7 @@ type GroupItemProps = {
   editGroup(groupId: number): void;
 }
 
-function GroupItem(props: GroupItemProps) {
+export default function GroupItem(props: GroupItemProps) {
   const getGroupItemTextClassName = () => {
     let className = isGroupCompleted(props.group) ? 'completed-group-item' : '';
     className += ' group-item-text';
@@ -94,5 +94,3 @@ function GroupItem(props: GroupItemProps) {
     </div>
   );
 }
-
-export default GroupItem;

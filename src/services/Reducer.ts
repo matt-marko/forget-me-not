@@ -79,7 +79,7 @@ export type DispatchSetAllGroups = {
   groups: Group[]; 
 }
 
-type DispatchAction = 
+export type DispatchAction = 
   DispatchAddGroup | 
   DispatchDeleteGroup |
   DispatchEditGroupOrder |

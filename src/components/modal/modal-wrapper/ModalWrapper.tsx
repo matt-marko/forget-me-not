@@ -12,7 +12,7 @@ type ModalWrapperProps = {
   modalType: ModalType | null;
 }
 
-function ModalWrapper(props: ModalWrapperProps) {
+export default function ModalWrapper(props: ModalWrapperProps) {
   switch (props.modalType) {
     case ModalType.Export:
       return <ExportModal {...props}/>;
@@ -22,5 +22,3 @@ function ModalWrapper(props: ModalWrapperProps) {
       return null;
   }
 }
-
-export default ModalWrapper;
