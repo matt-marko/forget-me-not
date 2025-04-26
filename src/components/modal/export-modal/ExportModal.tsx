@@ -21,7 +21,7 @@ export default function ExportModal(props: BackupModalProps) {
       <h1>Export tasks</h1>
       <textarea 
         readOnly={true}
-        value={btoa(JSON.stringify(groupsContext) /*?? ''*/)}
+        value={btoa(JSON.stringify(groupsContext))}
         ref={textareaRef}
       />
       <p>These are your tasks!<br />Copy the code and keep it somewhere safe</p>
