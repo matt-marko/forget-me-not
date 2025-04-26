@@ -17,7 +17,6 @@ export default function Taskboard() {
 
   const tasks = getCurrentGroup().tasks;
 
-
   function getCurrentGroup(): Group {
     const currentGroup: Group | undefined = groups.find((group: Group) => group.id === parseInt(groupId!));
     return currentGroup!;

@@ -1,6 +1,5 @@
-import Button from '@mui/material/Button/Button';
 import './ImportModal.css';
-import Modal from '@mui/material/Modal';
+import Button from '@mui/material/Button/Button';
 import { useContext, useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GroupsDispatchContext } from '../../../services/Context';
@@ -48,31 +47,25 @@ export default function ImportModal(props: BackupModalProps) {
   }
 
   return (
-    <Modal
-      className='backup-modal'
-      open={props.open}
-      onClose={props.handleClose}
-    >
-      <div className='backup-modal-content'>
-        <h1>Import tasks</h1>
-        <textarea value={importCode} onChange={handleImportCodeChange}/>
-        <p className={getErrorTextClass()}>Error importing tasks</p>
-        <p>Paste in here the code you received<br />when exporting your tasks</p>
-        <Button 
-          className='load-button'
-          onClick={importTasks}
-          variant='contained'
-          color='success'
-        >
-          Load
-        </Button>
-        <Button
-          onClick={props.handleClose}
-          variant='contained'
-        >
-          Nevermind!
-        </Button>
-      </div>
-    </Modal>
+    <div className='backup-modal-content'>
+      <h1>Import tasks</h1>
+      <textarea value={importCode} onChange={handleImportCodeChange}/>
+      <p className={getErrorTextClass()}>Error importing tasks</p>
+      <p>Paste in here the code you received<br />when exporting your tasks</p>
+      <Button 
+        className='load-button'
+        onClick={importTasks}
+        variant='contained'
+        color='success'
+      >
+        Load
+      </Button>
+      <Button
+        onClick={props.handleClose}
+        variant='contained'
+      >
+        Nevermind!
+      </Button>
+    </div>
   )
 }

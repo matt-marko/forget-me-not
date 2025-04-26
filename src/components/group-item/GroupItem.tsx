@@ -20,18 +20,9 @@ type GroupItemProps = {
 }
 
 export default function GroupItem(props: GroupItemProps) {
-  const getGroupItemTextClassName = () => {
-    let className = isGroupCompleted(props.group) ? 'completed-group-item' : '';
-    className += ' group-item-text';
-    return className;
-  };
-
-  const deleteGroup = () => {
-    groupsDispatch({
-      type: GroupsReducerActionType.DeleteGroup,
-      id: props.group.id
-    } as DispatchDeleteGroup);
-  }
+  const [isHovered, setHovered] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const groupsDispatch = useContext(GroupsDispatchContext);
 
   const {
     attributes,
@@ -43,15 +34,24 @@ export default function GroupItem(props: GroupItemProps) {
     id: props.group.id,
   });
 
-  const [isHovered, setHovered] = useState<boolean>(false);
-  const navigate = useNavigate();
-  const groupsDispatch = useContext(GroupsDispatchContext);
-
   const dragAndDropStyle = {
     transform: CSS.Transform.toString(transform),
     transition,
   };
   
+  function getGroupItemTextClassName(): string {
+    let className = isGroupCompleted(props.group) ? 'completed-group-item' : '';
+    className += ' group-item-text';
+    return className;
+  };
+
+  function deleteGroup(): void {
+    groupsDispatch({
+      type: GroupsReducerActionType.DeleteGroup,
+      id: props.group.id
+    } as DispatchDeleteGroup);
+  }
+
   return(
     <div 
       style={dragAndDropStyle}

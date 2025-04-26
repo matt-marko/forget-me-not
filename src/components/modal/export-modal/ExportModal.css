@@ -1,9 +1,3 @@
-.backup-modal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .backup-modal-content {
   justify-content: center;
   align-items: center;
