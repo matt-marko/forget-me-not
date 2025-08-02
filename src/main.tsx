@@ -35,7 +35,7 @@ function App() {
           handleCloseDrawerClick={() => setIsDrawerOpen(false)}
         />
         <ModalWrapper
-          open={activeModal !== null ? true : false}
+          open={activeModal !== null}
           modalType={activeModal}
           handleClose={() => setActiveModal(null)}
         />

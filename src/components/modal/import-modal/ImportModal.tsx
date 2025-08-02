@@ -4,6 +4,7 @@ import { useContext, useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GroupsDispatchContext } from '../../../services/Context';
 import { DispatchSetAllGroups, GroupsReducerActionType } from '../../../services/Reducer';
+import { Group } from '../../../interfaces/group';
 
 type BackupModalProps = {
   open: boolean;
@@ -18,10 +19,10 @@ export default function ImportModal(props: BackupModalProps) {
 
   function importTasks(): void {
     try {
-      const decodedTasks = atob(importCode);
+      const decodedTasksJson = decodeGroupsFromBase64(importCode);
 
-      // parse as JSON for the purpose of very basic data validation
-      const parsedTasks = JSON.parse(decodedTasks);
+      // Parse as JSON for the purpose of very basic data validation
+      const parsedTasks = JSON.parse(decodedTasksJson);
 
       localStorage.setItem('groups', JSON.stringify(parsedTasks));
 
@@ -37,6 +38,13 @@ export default function ImportModal(props: BackupModalProps) {
       setIsError(true);
     }
   };
+
+  function decodeGroupsFromBase64(base64: string): string {
+    const binary = atob(base64);
+    const bytes = Uint8Array.from(binary, char => char.charCodeAt(0));
+    const json = new TextDecoder().decode(bytes);
+    return json;
+  }
 
   function handleImportCodeChange(event: ChangeEvent<HTMLTextAreaElement>): void {
     setImportCode(event.target.value);
