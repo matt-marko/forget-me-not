@@ -4,7 +4,6 @@ import { useContext, useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GroupsDispatchContext } from '../../../services/Context';
 import { DispatchSetAllGroups, GroupsReducerActionType } from '../../../services/Reducer';
-import { Group } from '../../../interfaces/group';
 
 type BackupModalProps = {
   open: boolean;
