@@ -23,8 +23,6 @@ export default function ImportModal(props: BackupModalProps) {
       // Parse as JSON for the purpose of very basic data validation
       const parsedTasks = JSON.parse(decodedTasksJson);
 
-      localStorage.setItem('groups', JSON.stringify(parsedTasks));
-
       groupsDispatch({
         type: GroupsReducerActionType.SetAllGroups,
         groups: parsedTasks,
