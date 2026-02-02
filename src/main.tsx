@@ -10,6 +10,7 @@ import Footer from './components/footer/Footer.tsx';
 import GroupDrawer from './components/group-drawer/GroupDrawer.tsx';
 import ModalWrapper, { ModalType } from './components/modal/modal-wrapper/ModalWrapper.tsx';
 import { GroupsProvider } from './services/GroupsProvider.tsx';
+import GroupColour from './routes/GroupColour/GroupColour.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -40,13 +41,17 @@ function App() {
           handleClose={() => setActiveModal(null)}
         />
         <Routes>
-          <Route 
+          <Route
             path='/'
             element={<Dashboard />}
           />
           <Route 
             path='/groups/:groupId'
             element={<TaskboardRouter />}
+          />
+          <Route 
+            path='/groups/:groupId/colour'
+            element={<GroupColour />}
           />
         </Routes>
         <Footer />

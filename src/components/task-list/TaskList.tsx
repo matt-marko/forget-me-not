@@ -7,6 +7,7 @@ import { restrictToParentElement, restrictToVerticalAxis } from "@dnd-kit/modifi
 import { Group } from "../../interfaces/group";
 import { Task } from '../../interfaces/task';
 import UndoIcon from '@mui/icons-material/Undo';
+import PaletteIcon from '@mui/icons-material/Palette';
 import Button from '@mui/material/Button';
 import TaskItem from '../task-item/TaskItem';
 import { useNavigate } from 'react-router';
@@ -74,15 +75,18 @@ export default function TaskList(props: TasksListProps) {
   }
 
   return (
-    <div>
+    <div className={getTaskListClass()}>
       <div className='tasks-title'>
         <Button onClick={() => navigate('/')}>
           <UndoIcon />
         </Button>
         <h1>{currentGroup.name}</h1>
+        <Button onClick={() => navigate(`/groups/${props.groupId}/colour`)}>
+          <PaletteIcon />
+        </Button>
       </div>
       <ItemInput addItem={addTask} label={'Add Task'} />
-      <List className={getTaskListClass()}>
+      <List>
         <DndContext 
           onDragEnd={updateTasksAfterDragEnd} 
           modifiers={[restrictToVerticalAxis, restrictToParentElement]}

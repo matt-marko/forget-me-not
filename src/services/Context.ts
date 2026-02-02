@@ -3,4 +3,4 @@ import { Group } from '../interfaces/group';
 import { DispatchAction } from './Reducer';
 
 export const GroupsContext = createContext([] as Group[]);
-export const GroupsDispatchContext = createContext({} as Dispatch<DispatchAction>);
+export const GroupsDispatchContext = createContext<Dispatch<DispatchAction>>({} as Dispatch<DispatchAction>);

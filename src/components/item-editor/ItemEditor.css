@@ -1,3 +1,9 @@
+.item-editor-container {
+  background-color: lightcyan;
+  padding: 20px; 
+  border-radius: 10px;
+}
+
 .editor-button {
   height: 55px;
   font-size: 20px;
