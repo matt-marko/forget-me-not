@@ -9,7 +9,7 @@ import { DispatchEditGroupName, GroupsReducerActionType } from '../../services/R
 export default function Dashboard() {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editedGroupId, setEditedGroupId] = useState<number>(0);
-  
+
   const groups = useContext(GroupsContext);
   const groupsDispatch = useContext(GroupsDispatchContext);
 
@@ -29,18 +29,17 @@ export default function Dashboard() {
   };
 
   return (
-    <div className='main-content'>
-      {
-        isEditing 
+    <div className='dashboard-main-content'>
+        {isEditing
           ?
-            <ItemEditor
-              label='Edit Group'
-              text={groups.find((group: Group) => group.id === editedGroupId)!.name} 
-              confirmEdit={confirmEdit}
-            />
+          <ItemEditor
+            label='Edit Group'
+            text={groups.find((group: Group) => group.id === editedGroupId)!.name}
+            confirmEdit={confirmEdit}
+          />
           :
-            <GroupList editGroup={editGroup} />
-      }
+          <GroupList editGroup={editGroup} />
+        }
     </div>
   );
 }

@@ -15,17 +15,18 @@ export default function Taskboard() {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editedTaskId, setEditedTaskId] = useState<number>(0);
 
-  const tasks = getCurrentGroup().tasks;
+  const currentGroup = getCurrentGroup();
+  const tasks = currentGroup.tasks;
 
   function getCurrentGroup(): Group {
     const currentGroup: Group | undefined = groups.find((group: Group) => group.id === parseInt(groupId!));
     return currentGroup!;
-  };
+  }
 
   function editTask(id: number) {
     setEditedTaskId(id);
     setIsEditing(true);
-  };
+  }
 
   function confirmEdit(newText: string): void {
     const taskToEdit: Task = tasks.find((item: Task) => item.id === editedTaskId)!;
@@ -41,21 +42,24 @@ export default function Taskboard() {
   };
 
   return (
-    <div className='main-content'>
+    <div
+      className='dashboard-main-content'
+      style={{ backgroundColor: currentGroup.colour }}
+    >
       {
         isEditing
           ?
-            <ItemEditor 
-              label='Add Task'
-              text={tasks.find((task: Task) => task.id === editedTaskId)!.text}
-              confirmEdit={confirmEdit}
-            /> 
+          <ItemEditor
+            label='Add Task'
+            text={tasks.find((task: Task) => task.id === editedTaskId)!.text}
+            confirmEdit={confirmEdit}
+          />
           :
-            <TaskList 
-              groupId={parseInt(groupId!)}
-              tasks={tasks}
-              editTask={editTask}
-            />
+          <TaskList
+            groupId={parseInt(groupId!)}
+            tasks={tasks}
+            editTask={editTask}
+          />
       }
     </div>
   );

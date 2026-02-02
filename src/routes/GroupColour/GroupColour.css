@@ -1,0 +1,41 @@
+.colour-main-content {
+  margin: 0 auto;
+  text-align: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.colour-panel {
+  display: flex;
+  flex-direction: column;
+  background-color: lightcyan;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  margin: 0 auto;
+  text-align: center;
+  width: 300px;
+}
+
+.colour-input {
+  width: 70%;
+}
+
+.colour-button-container {
+  margin: 10px;
+}
+
+.colour-button {
+  margin: 5px;
+}
+
+.colour-error-text {
+  font-weight: 600;
+  color: #d43b3b;
+}
+
+.hidden {
+  display: none;
+}

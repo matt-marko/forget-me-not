@@ -18,6 +18,7 @@ export enum GroupsReducerActionType {
   DeleteTask = 'Delete-Task',
 
   SetAllGroups = 'Set-All-Groups',
+  SetGroupColour = 'Set-Group-Colour',
 };
 
 export type DispatchAddGroup = {
@@ -79,6 +80,12 @@ export type DispatchSetAllGroups = {
   groups: Group[]; 
 }
 
+export type DispatchSetGroupColour = {
+  type: typeof GroupsReducerActionType.SetGroupColour
+  groupId: number;
+  colour: string;
+}
+
 export type DispatchAction = 
   DispatchAddGroup | 
   DispatchDeleteGroup |
@@ -89,7 +96,10 @@ export type DispatchAction =
   DispatchEditTaskOrder |
   DispatchCompleteTask |
   DispatchDeleteTask |
-  DispatchSetAllGroups;
+  DispatchSetAllGroups |
+  DispatchSetGroupColour;
+
+const DEFAULT_COLOUR = '#ADD8E6';
 
 export function groupsReducer(groups: Group[], action: DispatchAction): Group[] {
   switch(action.type) {
@@ -100,6 +110,7 @@ export function groupsReducer(groups: Group[], action: DispatchAction): Group[] 
           id: generateId(groups),
           name: action.groupName,
           tasks: [],
+          colour: DEFAULT_COLOUR
         },
       ];
 
@@ -214,7 +225,28 @@ export function groupsReducer(groups: Group[], action: DispatchAction): Group[] 
       return action.groups;
     }
 
-    default:
-      throw new Error(`Unrecognized groups reducer action type: ${action}`);
+    case GroupsReducerActionType.SetGroupColour: {
+      const group = findGroupById(groups, action.groupId);
+
+      const updatedGroup: Group = {
+        ...group,
+        colour: action.colour,
+      };
+
+      const newGroups = groups.map((group: Group) => {
+        if (group.id === action.groupId) {
+          return updatedGroup;
+        } else {
+          return group;
+        }
+      });
+
+      return newGroups;
+    }
+
+    default: {
+      const _assertUnreachable: never = action
+      throw new Error(`Unrecognized groups reducer action type: ${_assertUnreachable}`);
+    }
   }
 } 

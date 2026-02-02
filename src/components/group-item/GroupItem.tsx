@@ -60,7 +60,11 @@ export default function GroupItem(props: GroupItemProps) {
       onMouseLeave={() => setHovered(false)}
       onClick={() => navigate('/groups/' + props.group.id)}
     >
-      <ListItem divider={true} className='group-item'>
+      <ListItem 
+        divider={true}
+        className='group-item'
+        style={{ backgroundColor: props.group.colour }}
+      >
         <ListItemText 
           className={getGroupItemTextClassName()}
           spellCheck={false}

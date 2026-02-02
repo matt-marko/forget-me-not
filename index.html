@@ -10,4 +10,29 @@
     <div id="root" style="width: 100vw"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
+
+  <script>
+    // Migrate tasks & groups to include colour
+    const groupsString = localStorage.getItem('groups');
+
+    try {
+      const groups = JSON.parse(groupsString);
+
+      if (Array.isArray(groups) && groups.length > 0 && groups[0].colour === undefined) {
+        const DEFAULT_COLOUR = '#ADD8E6';
+
+        groups.forEach(g => {
+          g.colour = DEFAULT_COLOUR;
+        })
+
+        const stringifedGroups = JSON.stringify(groups);
+
+        localStorage.setItem('groups', stringifedGroups);
+      }
+
+    } catch (e) {
+      console.error('Error occurred while migrating tasks and groups:', e);
+    }
+
+  </script>
 </html>

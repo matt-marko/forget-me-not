@@ -18,7 +18,7 @@ export default function ItemEditor(props: ItemEditorProps) {
   };
 
   return(
-    <div>
+    <div className='item-editor-container'>
       <TextField
         autoFocus
         label={props.label}
