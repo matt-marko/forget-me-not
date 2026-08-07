@@ -99,7 +99,7 @@ export type DispatchAction =
   DispatchSetAllGroups |
   DispatchSetGroupColour;
 
-const DEFAULT_COLOUR = '#ADD8E6';
+export const DEFAULT_COLOUR = '#ADD8E6';
 
 export function groupsReducer(groups: Group[], action: DispatchAction): Group[] {
   switch(action.type) {

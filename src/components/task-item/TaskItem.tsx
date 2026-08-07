@@ -10,12 +10,14 @@ import { CSS } from '@dnd-kit/utilities';
 import { Task } from '../../interfaces/task';
 import TaskItemButton from '../item-button/ItemButton';
 import { useState } from 'react';
+import { DEFAULT_COLOUR } from '../../services/Reducer';
 
 type TaskItemProps = {
   task: Task;
   completeTask(taskId: number): void;
   deleteTask(taskId: number): void;
   editTask(taskId: number): void;
+  colorCss?: string
 }
 
 export default function TaskItem(props: TaskItemProps) {
@@ -46,7 +48,11 @@ export default function TaskItem(props: TaskItemProps) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <ListItem className='task-item' divider={true}>
+      <ListItem 
+        className='task-item'
+        style={{ backgroundColor: props.colorCss ?? DEFAULT_COLOUR }}
+        divider={true}
+      >
         <Checkbox 
           checked={props.task.completed}
           onChange={() => props.completeTask(props.task.id)}

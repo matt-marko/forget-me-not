@@ -100,6 +100,7 @@ export default function TaskList(props: TasksListProps) {
                   completeTask={completeTask}
                   deleteTask={deleteTask}
                   editTask={props.editTask}
+                  colorCss={`color-mix(in oklab, ${currentGroup.colour}, white 50%)`}
                 />
               );
             })}
